@@ -1,0 +1,103 @@
+/* Basic reset & styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(120deg, #f0f0f0, #fafafa);
+    color: #333;
+    padding: 30px;
+}
+
+h1, h3 {
+    text-align: center;
+}
+
+/* Clases de margen, etc. */
+.mt5  { margin-top: 5px; }
+.mb5  { margin-bottom: 5px; }
+.mt10 { margin-top: 10px; }
+.mb10 { margin-bottom: 10px; }
+.mt20 { margin-top: 20px; }
+.mb20 { margin-bottom: 20px; }
+
+/* Container for centering the form on the page */
+.form-container {
+    max-width: 500px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#please_wait_message {
+    display: none;
+    background-color: #fff3cd;
+    color: #856404;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+}
+
+/* Large clickable rectangle for file selection */
+.drop-zone {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    margin: 20px 0px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Hover normal */
+.drop-zone:hover {
+    background-color: #eee;
+    border-color: #bbb;
+}
+
+/* Dragover (cuando se arrastra el archivo encima) */
+.drop-zone.dragover {
+    background-color: #eee;
+    border-color: #999;
+}
+
+/* Si quieres estilizar el texto dentro, lo puedes hacer con #drop_zone_text o .drop-zone p */
+.drop-zone p {
+    margin: 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Ocultar el input original */
+.file-input {
+    display: none;
+}
+
+/* Upload button styling */
+.upload-btn {
+    display: inline-block;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+.upload-btn:hover {
+    background-color: #43a047;
+}
+.upload-btn:active {
+    transform: scale(0.98);
+}
