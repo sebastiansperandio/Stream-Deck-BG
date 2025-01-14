@@ -17,6 +17,9 @@ $upload_controller = new UploadController();
 if ( 'upload_gif' === $action && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
     // Process the uploaded file and proceed to the next step
     $upload_controller->handle_upload();
+} elseif ( 'download_sample' === $action ) {
+    // Download a sample GIF.
+    $upload_controller->download_sample();
 } else {
     // Show the initial HTML form
     $upload_controller->show_form();

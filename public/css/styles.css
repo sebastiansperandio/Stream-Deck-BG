@@ -1,22 +1,49 @@
-/* Basic reset & styling */
+/* Basic reset */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* We want the body to take up the entire screen */
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+:root {
+    --primary-color: indigo;
+    --button-color: #204cfe;
+    --button-hover-color: #1231ac;
+    --link-color: #204cfe;
+}
+
+/* 
+   The body as a Flex Container,
+   centering .form-container vertically and horizontally
+*/
 body {
+    display: flex;
+    justify-content: center; /* horizontally center the container */
+    align-items: center;     /* vertically center the container */
     font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background: linear-gradient(120deg, #f0f0f0, #fafafa);
+    /* background: linear-gradient(120deg, #f0f0f0, #fafafa); */
+    background: linear-gradient( 120deg, var(--primary-color), lightblue);
     color: #333;
-    padding: 30px;
+    padding: 20px;
 }
 
+/* Centered or not, depends on your taste.
+   If you want left-aligned text, you can remove text-align: center. */
 h1, h3 {
-    text-align: center;
+    text-align: left;
 }
 
-/* Clases de margen, etc. */
+form {
+    width: 100%; /* Takes up the entire width of the container */
+}
+
+/* Margin classes if you need them */
 .mt5  { margin-top: 5px; }
 .mb5  { margin-bottom: 5px; }
 .mt10 { margin-top: 10px; }
@@ -24,67 +51,74 @@ h1, h3 {
 .mt20 { margin-top: 20px; }
 .mb20 { margin-bottom: 20px; }
 
-/* Container for centering the form on the page */
+/* .form-container: Column flex, aligned to the left */
 .form-container {
-    max-width: 500px;
-    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;  /* Align everything to the left edge */
+    row-gap: 20px;            /* Vertical spacing between elements */
+
+    width: 100%;
+    max-width: 500px;         /* width limit */
     background-color: #fff;
-    padding: 20px;
     border-radius: 8px;
+    padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.form-container h1, .form-container h3 {
+    text-align: center;
+}
+
+/* "please wait" message */
 #please_wait_message {
     display: none;
     background-color: #fff3cd;
     color: #856404;
     font-weight: bold;
     padding: 10px;
-    margin-bottom: 20px;
+    width: 100%;          /* taking up the entire width of the container */
     border: 1px solid #ffeeba;
     border-radius: 4px;
 }
 
-/* Large clickable rectangle for file selection */
+/* Large clickable area for drag & drop */
 .drop-zone {
     border: 2px solid #ccc;
     border-radius: 8px;
     background: #f9f9f9;
+    margin-bottom: 0.5rem;
     padding: 40px 20px;
-    text-align: center;
+    text-align: center;    /* If you want the internal text centered */
     cursor: pointer;
-    margin: 20px 0px;
     transition: background-color 0.2s ease, border-color 0.2s ease;
+    width: 100%; 
 }
 
-/* Hover normal */
 .drop-zone:hover {
     background-color: #eee;
     border-color: #bbb;
 }
 
-/* Dragover (cuando se arrastra el archivo encima) */
 .drop-zone.dragover {
     background-color: #eee;
     border-color: #999;
 }
 
-/* Si quieres estilizar el texto dentro, lo puedes hacer con #drop_zone_text o .drop-zone p */
 .drop-zone p {
     margin: 0;
     font-size: 1rem;
     color: #555;
 }
 
-/* Ocultar el input original */
+/* Hide the original input */
 .file-input {
     display: none;
 }
 
-/* Upload button styling */
+/* Main button */
 .upload-btn {
-    display: inline-block;
-    background-color: #4caf50;
+    background-color: var(--button-color);
     color: #fff;
     padding: 12px 20px;
     border: none;
@@ -95,9 +129,20 @@ h1, h3 {
     transition: background-color 0.3s ease, transform 0.1s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
+
 .upload-btn:hover {
-    background-color: #43a047;
+    background-color: var(--button-hover-color);
 }
 .upload-btn:active {
     transform: scale(0.98);
+}
+
+/* Styles for your links inside the form-container, 
+   if you want them left-aligned */
+.form-container a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+.form-container a:hover {
+    text-decoration: underline;
 }

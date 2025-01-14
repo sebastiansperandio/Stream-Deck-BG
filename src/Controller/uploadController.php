@@ -18,113 +18,122 @@ class UploadController
         ?>
         <!DOCTYPE html>
         <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title>Stream Deck GIF Background</title>
-            <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
-        </head>
-        <body>
-        <div class="form-container">
-            <h1 class="mb10">Stream Deck GIF Background</h1>
-            <h3>Only Stream Deck El Gato XL at the moment (768x384 - 32 buttons)</h3>
+            <head>
+                <meta charset="UTF-8">
+                <title>Stream Deck GIF Background</title>
+                <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
+            </head>
+            <body>
+                <!-- <div class="background_img">
+                    <img src="/public/img/streamdeckXL.webp" alt="Stream Deck XL">
+                </div> -->
+                <div class="form-container">
+                    <h1>Stream Deck GIF Background</h1>
+                    <h3>Only Stream Deck El Gato XL at the moment (768x384 - 32 buttons)</h3>
 
-            <div id="please_wait_message">
-                Please wait a moment, we are processing your GIF. This can take a few minutes...
-            </div>
+                    <div id="please_wait_message">
+                        Please wait a moment, we are processing your GIF. This can take a few minutes...
+                    </div>
 
-            <form action="?action=upload_gif" method="post" enctype="multipart/form-data" onsubmit="showPleaseWait()">
-                <div id="drop_zone" class="drop-zone">
-                    <!-- El párrafo inicial. Actualizaremos su contenido al arrastrar/soltar o seleccionar. -->
-                    <p id="drop_zone_text">Drag &amp; drop your GIF here, or click to select</p>
-                    <input type="file" id="gif_file" class="file-input" name="gif_file" accept=".gif" required>
+                    <form action="?action=upload_gif" method="post" enctype="multipart/form-data" onsubmit="showPleaseWait()">
+                        <div id="drop_zone" class="drop-zone">
+                            <!-- El párrafo inicial. Actualizaremos su contenido al arrastrar/soltar o seleccionar. -->
+                            <p id="drop_zone_text">Drag &amp; drop your GIF here, or click to select</p>
+                            <input type="file" id="gif_file" class="file-input" name="gif_file" accept=".gif" required>
+                        </div>
+
+                        <button type="submit" class="upload-btn">Upload GIF</button>
+                    </form>
+                    <div class="mt20">
+                        <p>Need a sample GIF?</p>
+                        <p class="mt5">
+                            <a href="?action=download_sample">Download</a>
+                        </p>
+                    </div>
+
+                    <div class="mt10">
+                        <p>Need support for other Stream Deck models?</p>
+                        <p class="mt5">
+                            <a href="mailto:sebastiansperandio@gmail.com">Email me</a>. 
+                            I'll be happy to add it!
+                        </p>
+                    </div>
+                    <div class="mt10">
+                        <p>Want to see the code?</p>
+                        <p class="mt5">
+                            <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank">GitHub</a>
+                        </p>
+                    </div>
                 </div>
 
-                <button type="submit" class="upload-btn">Upload GIF</button>
-            </form>
+                <script>
+                // Muestra "please wait" cuando se envía el formulario
+                function showPleaseWait() {
+                    document.getElementById('please_wait_message').style.display = 'block';
+                }
 
-            <div class="mt20">
-                <p>Need support for other Stream Deck models?</p>
-                <p class="mt5">
-                    <a href="mailto:sebastiansperandio@gmail.com">Email me</a>. 
-                    I'll be happy to add it!
-                </p>
-            </div>
-            <div class="mt20">
-                <p>Want to see the code?</p>
-                <p class="mt5">
-                    <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank">GitHub</a>
-                </p>
-            </div>
-        </div>
+                // ---------- DRAG & DROP + Feedback del nombre de archivo ----------
+                const dropZone      = document.getElementById('drop_zone');
+                const dropZoneText  = document.getElementById('drop_zone_text');
+                const fileInput     = document.getElementById('gif_file');
+                const defaultMsg    = 'Drag & drop your GIF here, or click to select';
 
-        <script>
-        // Muestra "please wait" cuando se envía el formulario
-        function showPleaseWait() {
-            document.getElementById('please_wait_message').style.display = 'block';
-        }
+                // Evitar la acción por defecto del navegador
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }, false);
+                });
 
-        // ---------- DRAG & DROP + Feedback del nombre de archivo ----------
-        const dropZone      = document.getElementById('drop_zone');
-        const dropZoneText  = document.getElementById('drop_zone_text');
-        const fileInput     = document.getElementById('gif_file');
-        const defaultMsg    = 'Drag & drop your GIF here, or click to select';
+                // Destacar el drop zone al arrastrar
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.add('dragover');
+                    }, false);
+                });
 
-        // Evitar la acción por defecto del navegador
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, e => {
-                e.preventDefault();
-                e.stopPropagation();
-            }, false);
-        });
+                // Quitar destaque al salir o soltar
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.remove('dragover');
+                    }, false);
+                });
 
-        // Destacar el drop zone al arrastrar
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => {
-                dropZone.classList.add('dragover');
-            }, false);
-        });
+                // Manejar el drop: asignamos archivos al input, y mostramos nombre
+                dropZone.addEventListener('drop', e => {
+                    const droppedFiles = e.dataTransfer.files;
+                    if (droppedFiles && droppedFiles.length > 0) {
+                        fileInput.files = droppedFiles; // Se asigna al input
+                        showFileNames(droppedFiles);
+                    }
+                }, false);
 
-        // Quitar destaque al salir o soltar
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => {
-                dropZone.classList.remove('dragover');
-            }, false);
-        });
+                // Permitir clic en la zona para abrir el diálogo de archivos
+                dropZone.addEventListener('click', () => {
+                    fileInput.click();
+                });
 
-        // Manejar el drop: asignamos archivos al input, y mostramos nombre
-        dropZone.addEventListener('drop', e => {
-            const droppedFiles = e.dataTransfer.files;
-            if (droppedFiles && droppedFiles.length > 0) {
-                fileInput.files = droppedFiles; // Se asigna al input
-                showFileNames(droppedFiles);
-            }
-        }, false);
+                // Si el usuario hace clic y selecciona archivo(s) manualmente
+                fileInput.addEventListener('change', () => {
+                    if (fileInput.files && fileInput.files.length > 0) {
+                        showFileNames(fileInput.files);
+                    } else {
+                        // Si se cancela la selección
+                        dropZoneText.innerText = defaultMsg;
+                    }
+                });
 
-        // Permitir clic en la zona para abrir el diálogo de archivos
-        dropZone.addEventListener('click', () => {
-            fileInput.click();
-        });
-
-        // Si el usuario hace clic y selecciona archivo(s) manualmente
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files && fileInput.files.length > 0) {
-                showFileNames(fileInput.files);
-            } else {
-                // Si se cancela la selección
-                dropZoneText.innerText = defaultMsg;
-            }
-        });
-
-        // Función para mostrar los nombres de los archivos seleccionados
-        function showFileNames(fileList) {
-            if (fileList.length === 1) {
-                dropZoneText.innerText = fileList[0].name;
-            } else {
-                dropZoneText.innerText = fileList.length + ' files selected';
-            }
-        }
-        </script>
-        </body>
+                // Función para mostrar los nombres de los archivos seleccionados
+                function showFileNames(fileList) {
+                    if (fileList.length === 1) {
+                        dropZoneText.innerText = fileList[0].name;
+                    } else {
+                        dropZoneText.innerText = fileList.length + ' files selected';
+                    }
+                }
+                </script>
+            </body>
         </html>
         <?php
     }
@@ -152,5 +161,24 @@ class UploadController
         // Delegate to GifProcessController
         $process_controller = new GifProcessController();
         $process_controller->process_gif($uploaded_path, $temp_dir);
+    }
+
+    /**
+     * Force download of the sample GIF, if it exists.
+     */
+    public function download_sample(): void
+    {
+        $sample_path = __DIR__ . '/../../public/sample/sample_768x384.gif';
+
+        if ( ! file_exists( $sample_path ) ) {
+            exit( 'Sample GIF not found on the server.' );
+        }
+
+        header( 'Content-Type: image/gif' );
+        header( 'Content-Disposition: attachment; filename="sample_768x384.gif"' );
+        header( 'Content-Length: ' . filesize( $sample_path ) );
+
+        readfile( $sample_path );
+        exit;
     }
 }
