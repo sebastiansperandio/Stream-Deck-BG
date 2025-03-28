@@ -11,7 +11,12 @@ use SDBG\Controller\GifProcessController;
  */
 class UploadController
 {
-    public function show_form(): void
+    /**
+     * Show the HTML form for uploading a GIF.
+     * 
+     * @param string $error_message Optional error message to display.
+     */
+    public function show_form( string $error_message='' ): void
     {
         // Ajusta la ruta a tu stylesheet
         $css_url = '/public/css/styles.css';
@@ -24,22 +29,37 @@ class UploadController
                 <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
             </head>
             <body>
-                <!-- <div class="background_img">
-                    <img src="/public/img/streamdeckXL.webp" alt="Stream Deck XL">
-                </div> -->
+               
                 <div class="form-container">
                     <h1>Stream Deck GIF Background</h1>
-                    <h3>Only Stream Deck El Gato XL at the moment (768x384 - 32 buttons)</h3>
+                    <h3>Select your Stream Deck model and upload a GIF</h3>
+                    
+                    <?php if ( ! empty( $error_message ) ): ?>
+                        <div id="error_message" class="error-message">
+                            <?php echo $error_message; ?>
+                        </div>
+                    <?php endif; ?>
 
                     <div id="please_wait_message">
                         Please wait a moment, we are processing your GIF. This can take a few minutes...
                     </div>
 
                     <form action="?action=upload_gif" method="post" enctype="multipart/form-data" onsubmit="showPleaseWait()">
+                        <div class="mt10 model-selector">
+                            <label for="model">Select Stream Deck Model:</label>
+                            <select name="model" id="model" onchange="updateModelMessage()" required>
+                                <option value="" disabled selected>-- Select --</option>
+                                <option value="xl">Stream Deck XL (768x384, 96x96 tiles)</option>
+                                <option value="plus">Stream Deck Plus (192x96, 96x96 tiles)</option>
+                            </select>
+                        </div>
+
+                        <p id="model_message" class="mt10"></p>
+                        
                         <div id="drop_zone" class="drop-zone">
                             <!-- El párrafo inicial. Actualizaremos su contenido al arrastrar/soltar o seleccionar. -->
                             <p id="drop_zone_text">Drag &amp; drop your GIF here, or click to select</p>
-                            <input type="file" id="gif_file" class="file-input" name="gif_file" accept=".gif" required>
+                            <input type="file" id="gif_file" class="file-input" name="gif_file" accept=".gif" required onchange="clearErrorMessage();">
                         </div>
 
                         <button type="submit" class="upload-btn">Upload GIF</button>
@@ -47,7 +67,7 @@ class UploadController
                     <div class="mt20">
                         <p>Need a sample GIF?</p>
                         <p class="mt5">
-                            <a href="?action=download_sample">Download</a>
+                            <a id="download_sample_link" href="?action=download_sample&model=xl">Download</a>
                         </p>
                     </div>
 
@@ -67,9 +87,35 @@ class UploadController
                 </div>
 
                 <script>
+                // Clear the error message
+                function clearErrorMessage() {
+                    const errorMessage = document.getElementById('error_message');
+                    if (errorMessage) {
+                        errorMessage.remove(); // Remove the error message element
+                    }
+                }
+
                 // Muestra "please wait" cuando se envía el formulario
                 function showPleaseWait() {
                     document.getElementById('please_wait_message').style.display = 'block';
+                }
+
+                // Update the model message based on the selected option.
+                function updateModelMessage() {
+                    const modelSelect  = document.getElementById('model');
+                    const modelMessage = document.getElementById('model_message');
+                    const downloadLink = document.getElementById('download_sample_link');
+
+                    if (modelSelect.value === 'xl') {
+                        modelMessage.innerText = 'For this model, you need a GIF of 768x384 pixels.';
+                    } else if (modelSelect.value === 'plus') {
+                        modelMessage.innerText = 'For this model, you need a GIF of 384x192 pixels.';
+                        downloadLink.href = `?action=download_sample&model=${modelSelect.value}`;
+                    }
+
+                    // Add the class 'model_message' to the <p> element
+                    modelMessage.classList.add('model_message');
+                    clearErrorMessage();
                 }
 
                 // ---------- DRAG & DROP + Feedback del nombre de archivo ----------
@@ -138,7 +184,12 @@ class UploadController
         <?php
     }
 
-    public function handle_upload(): void
+    /**
+     * Handle the upload of a GIF file.
+     * 
+     * @param string $model The model of the Stream Deck (default: 'xl').
+     */
+    public function handle_upload( string $model = 'xl' ): void
     {
         if (!isset($_FILES['gif_file']) || $_FILES['gif_file']['error'] !== UPLOAD_ERR_OK) {
             exit('Error: No valid GIF file was provided.');
@@ -160,25 +211,46 @@ class UploadController
 
         // Delegate to GifProcessController
         $process_controller = new GifProcessController();
-        $process_controller->process_gif($uploaded_path, $temp_dir);
+        try {
+            $process_controller->process_gif($uploaded_path, $temp_dir, $model);
+        } catch (\Exception $e) {
+            $this->show_form('Error: ' . $e->getMessage());
+        }
     }
 
     /**
      * Force download of the sample GIF, if it exists.
+     * 
+     * @param string $model The model of the Stream Deck (default: 'xl').
      */
-    public function download_sample(): void
+    public function download_sample( string $model = 'xl' ): void
     {
-        $sample_path = __DIR__ . '/../../public/sample/sample_768x384.gif';
+        $sample = match ( $model ) {
+            'xl' => [
+                'path' => __DIR__ . '/../../public/sample/sample_768x384.gif',
+                'filename' => 'sample_768x384.gif',
+            ],
+            'plus' => [
+                'path' => __DIR__ . '/../../public/sample/sample_384x192.gif',
+                'filename' => 'sample_384x192.gif',
+            ],
+            default => exit('Invalid model specified.'),
+        };
 
-        if ( ! file_exists( $sample_path ) ) {
+        [
+            'path' => $path,
+            'filename' => $filename,
+        ] = $sample;
+
+        if ( ! file_exists( $path ) ) {
             exit( 'Sample GIF not found on the server.' );
         }
 
         header( 'Content-Type: image/gif' );
-        header( 'Content-Disposition: attachment; filename="sample_768x384.gif"' );
-        header( 'Content-Length: ' . filesize( $sample_path ) );
+        header( 'Content-Disposition: attachment; filename="'. $filename .'"' );
+        header( 'Content-Length: ' . filesize( $path ) );
 
-        readfile( $sample_path );
+        readfile( $path );
         exit;
     }
 }

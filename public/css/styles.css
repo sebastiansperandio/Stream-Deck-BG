@@ -82,6 +82,17 @@ form {
     border-radius: 4px;
 }
 
+/* "please wait" message */
+.model_message {
+    background-color: #d1ecf1;
+    color: #004085;
+    font-weight: bold;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #004085;
+    border-radius: 4px;
+}
+
 /* Large clickable area for drag & drop */
 .drop-zone {
     border: 2px solid #ccc;
@@ -93,6 +104,7 @@ form {
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
     width: 100%; 
+    margin-top: 0.5rem;
 }
 
 .drop-zone:hover {
@@ -145,4 +157,49 @@ form {
 }
 .form-container a:hover {
     text-decoration: underline;
+}
+
+/* Styles for the model selector */
+.model-selector {
+    display: flex;
+    flex-direction: column; /* Stack label and select vertically */
+    align-items: flex-start; /* Align to the left */
+    row-gap: 5px; /* Add spacing between label and select */
+    width: 100%; /* Ensure it takes the full width of the container */
+}
+
+.model-selector label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-color, #333); /* Use a text color variable or fallback */
+}
+
+.model-selector select {
+    width: 100%; /* Make the dropdown take the full width */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1rem;;
+}
+
+.model-selector select:focus {
+    border-color: var(--button-color, #204cfe); /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(32, 76, 254, 0.5); /* Add a subtle glow */
+    outline: none; /* Remove default outline */
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
 }

@@ -15,6 +15,18 @@ use SDBG\Entity\Tile_size;
 class GifProcessController
 {
     /**
+     * Dimensions for different Stream Deck models.
+     * 'xl' model: 768x384
+     * 'plus' model: 384x192
+     * These dimensions are used to determine how to slice the GIF.
+     * @var array
+     */
+    private const MODEL_DIMENSIONS = [
+        'xl' => ['width' => 768, 'height' => 384],
+        'plus' => ['width' => 384, 'height' => 192],
+    ];
+
+    /**
      * Process the uploaded GIF.
      * Steps:
      * 1. Extract frames (coalesce).
@@ -26,10 +38,11 @@ class GifProcessController
      * @param string $gif_path  Path to the uploaded GIF inside a temp folder.
      * @param string $temp_dir  The folder containing the GIF and where
      *                          we'll store intermediate files.
+     * @param string $model     The model of the Stream Deck (default: 'xl').
      *
      * @return void
      */
-    public function process_gif(string $gif_path, string $temp_dir): void
+    public function process_gif( string $gif_path, string $temp_dir, string $model='xl' ): void
     {
         // 1) Extract frames
         $extractor = new Gif_frame_extractor();
@@ -37,6 +50,24 @@ class GifProcessController
         mkdir($frames_dir, 0777, true);
 
         [$frame_paths, $gif_width, $gif_height] = $extractor->extract_frames($gif_path, $frames_dir);
+
+        // Validate GIF dimensions based on the selected model
+        $expected_dimensions = self::MODEL_DIMENSIONS[$model] ?? null;
+
+        if (!$expected_dimensions) {
+            throw new \Exception("Invalid model specified. Please select a valid Stream Deck model.");
+        }
+    
+        if ($gif_width !== $expected_dimensions['width'] || $gif_height !== $expected_dimensions['height']) {
+            throw new \Exception(sprintf(
+                "Invalid GIF dimensions for model '%s'. Expected %dx%d, but got %dx%d.",
+                $model,
+                $expected_dimensions['width'],
+                $expected_dimensions['height'],
+                $gif_width,
+                $gif_height
+            ));
+        }
 
         // 2) Build sub-GIF tiles
         $segments_dir = $temp_dir . '/segments';
