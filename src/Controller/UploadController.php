@@ -49,8 +49,9 @@ class UploadController
                             <label for="model">Select Stream Deck Model:</label>
                             <select name="model" id="model" onchange="updateModelMessage()" required>
                                 <option value="" disabled selected>-- Select --</option>
-                                <option value="xl">Stream Deck XL (768x384, 96x96 tiles)</option>
+                                <option value="regular">Stream Deck (480x288, 96x96 tiles)</option>
                                 <option value="plus">Stream Deck Plus (192x96, 96x96 tiles)</option>
+                                <option value="xl">Stream Deck XL (768x384, 96x96 tiles)</option>
                             </select>
                         </div>
 
@@ -110,8 +111,11 @@ class UploadController
                         modelMessage.innerText = 'For this model, you need a GIF of 768x384 pixels.';
                     } else if (modelSelect.value === 'plus') {
                         modelMessage.innerText = 'For this model, you need a GIF of 384x192 pixels.';
-                        downloadLink.href = `?action=download_sample&model=${modelSelect.value}`;
+                    } else if (modelSelect.value === 'regular') {
+                        modelMessage.innerText = 'For this model, you need a GIF of 480x288 pixels.';
                     }
+
+                    downloadLink.href = `?action=download_sample&model=${modelSelect.value}`;
 
                     // Add the class 'model_message' to the <p> element
                     modelMessage.classList.add('model_message');
@@ -233,6 +237,10 @@ class UploadController
             'plus' => [
                 'path' => __DIR__ . '/../../public/sample/sample_384x192.gif',
                 'filename' => 'sample_384x192.gif',
+            ],
+            'regular' => [
+                'path' => __DIR__ . '/../../public/sample/sample_480x288.gif',
+                'filename' => 'sample_480x288.gif',
             ],
             default => exit('Invalid model specified.'),
         };

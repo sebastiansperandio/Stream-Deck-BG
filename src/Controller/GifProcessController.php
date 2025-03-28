@@ -22,8 +22,9 @@ class GifProcessController
      * @var array
      */
     private const MODEL_DIMENSIONS = [
-        'xl' => ['width' => 768, 'height' => 384],
-        'plus' => ['width' => 384, 'height' => 192],
+        'regular' => ['width' => 480, 'height' => 288],
+        'xl'      => ['width' => 768, 'height' => 384],
+        'plus'    => ['width' => 384, 'height' => 192],
     ];
 
     /**

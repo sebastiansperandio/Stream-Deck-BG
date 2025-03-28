@@ -1,6 +1,6 @@
 # Stream Deck GIF Background Slicer
 
-This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck models, including **Stream Deck XL** and **Stream Deck Plus**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.
+This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck models, including **Stream Deck**, **Stream Deck Plus** and **Stream Deck XL**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.
 
 You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https://sdbg.crabstudio.com.ar/)
 
@@ -16,7 +16,7 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
 - **Automatic slicing** of the GIF frames into 96×96 tiles.  
 - **Separate** each tile into a fully animated mini-GIF.  
 - **Package** all mini-GIFs into a single ZIP for easy download.  
-- **Sample GIF** available for both models (768×384 for XL, 384×192 for Plus) to test or verify correct dimensions.
+- **Sample GIF** available for both models (480x288 for regular, 384×192 for Plus and 768×384 for XL,) to test or verify correct dimensions.
 
 ---
 
@@ -24,8 +24,9 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
 
 | Model                | GIF Dimensions | Tile Size | Grid Layout |
 |----------------------|----------------|-----------|-------------|
-| **Stream Deck XL**   | 768×384        | 96×96     | 8×4         |
+| **Stream Deck**      | 480×288        | 96×96     | 5×3         |
 | **Stream Deck Plus** | 384×192        | 96×96     | 4×2         |
+| **Stream Deck XL**   | 768×384        | 96×96     | 8×4         |
 
 ---
 
@@ -53,8 +54,9 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
    - Open the `index.php` from your project folder in a browser, or visit [https://sdbg.crabstudio.com.ar/](https://sdbg.crabstudio.com.ar/).
 2. **(Optional) Download a Sample GIF**  
    - Click **Download** to get a pre-sized GIF for your selected model:
-     - **Stream Deck XL**: 768×384
+     - **Stream Deck**: 480×288
      - **Stream Deck Plus**: 384×192
+     - **Stream Deck XL**: 768×384
 3. **Select Your Model**  
    - Use the dropdown to select **Stream Deck XL** or **Stream Deck Plus**.
 4. **Drag & Drop or Click**  
@@ -64,10 +66,24 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
    - Click **Upload GIF**. A “Please wait” message shows while slicing is in progress.
 6. **Download**  
    - You’ll be prompted to download a ZIP once the process is complete.  
-   - This ZIP contains multiple sub-GIFs named `tile_r#_c#.gif`.
+   - This ZIP contains multiple sub-GIFs named `tile_r#_c#.gif` ([see naming convention](#tile-naming-convention)).
 7. **Apply to Stream Deck**  
    - In your Stream Deck software, assign each button its corresponding mini-GIF.  
    - When placed correctly, the Stream Deck recreates the original GIF across all buttons.
+
+---
+
+### Tile Naming Convention
+
+The naming convention for the tiles corresponds to their position on the Stream Deck grid:
+
+- `tile_r0_c0.gif`: First button in the first row (top-left corner).  
+- `tile_r0_c1.gif`: Second button in the first row.  
+- `tile_r0_c2.gif`: Third button in the first row.  
+- ...  
+- `tile_r1_c3.gif`: Fourth button in the second row.  
+
+This pattern continues for all rows and columns, where `r` represents the row number (starting from 0) and `c` represents the column number (starting from 0).
 
 ---
 
