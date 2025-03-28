@@ -1,12 +1,12 @@
 # Stream Deck GIF Background Slicer
 
-This project is designed to **recut** a larger GIF (for example, 768×384) into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck XL (which has 32 buttons). It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.
+This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck models, including **Stream Deck XL** and **Stream Deck Plus**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.
 
 You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https://sdbg.crabstudio.com.ar/)
 
 ---
 
-![Sample Stream Deck GIF Slicer](public/img/demo.png)
+![Sample Stream Deck GIF Slicer](public/img/demo.jpeg)
 
 ---
 
@@ -16,7 +16,16 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
 - **Automatic slicing** of the GIF frames into 96×96 tiles.  
 - **Separate** each tile into a fully animated mini-GIF.  
 - **Package** all mini-GIFs into a single ZIP for easy download.  
-- **Sample GIF** link available (768×384) to test or verify correct dimensions.
+- **Sample GIF** available for both models (768×384 for XL, 384×192 for Plus) to test or verify correct dimensions.
+
+---
+
+## Supported Models
+
+| Model                | GIF Dimensions | Tile Size | Grid Layout |
+|----------------------|----------------|-----------|-------------|
+| **Stream Deck XL**   | 768×384        | 96×96     | 8×4         |
+| **Stream Deck Plus** | 384×192        | 96×96     | 4×2         |
 
 ---
 
@@ -43,16 +52,20 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
 1. **Access the Tool**  
    - Open the `index.php` from your project folder in a browser, or visit [https://sdbg.crabstudio.com.ar/](https://sdbg.crabstudio.com.ar/).
 2. **(Optional) Download a Sample GIF**  
-   - Click **Download** (768×384) if you want a pre-sized GIF for the Stream Deck XL.
-3. **Drag & Drop or Click**  
-   - Drag your own 768×384 GIF onto the box or click to open the file dialog.  
+   - Click **Download** to get a pre-sized GIF for your selected model:
+     - **Stream Deck XL**: 768×384
+     - **Stream Deck Plus**: 384×192
+3. **Select Your Model**  
+   - Use the dropdown to select **Stream Deck XL** or **Stream Deck Plus**.
+4. **Drag & Drop or Click**  
+   - Drag your GIF onto the box or click to open the file dialog.  
    - You should see the file name appear once it’s selected.
-4. **Upload**  
+5. **Upload**  
    - Click **Upload GIF**. A “Please wait” message shows while slicing is in progress.
-5. **Download**  
+6. **Download**  
    - You’ll be prompted to download a ZIP once the process is complete.  
    - This ZIP contains multiple sub-GIFs named `tile_r#_c#.gif`.
-6. **Apply to Stream Deck**  
+7. **Apply to Stream Deck**  
    - In your Stream Deck software, assign each button its corresponding mini-GIF.  
    - When placed correctly, the Stream Deck recreates the original GIF across all buttons.
 
