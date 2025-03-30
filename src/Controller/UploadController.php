@@ -86,9 +86,17 @@ class UploadController
                                 <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank">GitHub</a>
                             </p>
                         </div>
-                        <div class="buy-me-a-coffe">
-                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="ssperandio" data-color="#9298c9" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#F7F7F7" data-coffee-color="#FFDD00" ></script>
+                        <div class="buy-me-a-coffe-pp">
+                            <style>.pp-96GEXVM9RCTLS{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;}</style>
+                            <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+                            <input class="pp-96GEXVM9RCTLS" type="submit" value="Buy me a coffe" />
+                            <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
+                            <section> Con la tecnología de <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+                            </form>
                         </div>
+                        <!-- <div class="buy-me-a-coffe">
+                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="ssperandio" data-color="#9298c9" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#F7F7F7" data-coffee-color="#FFDD00" ></script>
+                        </div> -->
                     </div>
                 </div>
                 <script>
