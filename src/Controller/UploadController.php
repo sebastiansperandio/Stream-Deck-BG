@@ -49,9 +49,9 @@ class UploadController
                             <label for="model">Select Stream Deck Model:</label>
                             <select name="model" id="model" onchange="updateModelMessage()" required>
                                 <option value="" disabled selected>-- Select --</option>
-                                <option value="regular">Stream Deck (480x288, 96x96 tiles)</option>
-                                <option value="plus">Stream Deck Plus (192x96, 96x96 tiles)</option>
-                                <option value="xl">Stream Deck XL (768x384, 96x96 tiles)</option>
+                                <option value="regular">Stream Deck (480x288, 96x96 tiles, 15 buttons )</option>
+                                <option value="plus">Stream Deck Plus (384x192, 96x96 tiles, 8 buttons)</option>
+                                <option value="xl">Stream Deck XL (768x384, 96x96 tiles, 32 buttons)</option>
                             </select>
                         </div>
 
