@@ -219,3 +219,60 @@ form {
 .bmc-btn {
     text-decoration: none;
 }
+
+/* Estilos para la página de agradecimiento */
+.thank-you-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.thank-you-message {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--button-color);
+    text-align: center;
+    margin: 10px 0;
+}
+
+.benefit-list {
+    margin-left: 20px;
+    color: #333;
+}
+
+.benefit-list li {
+    margin-bottom: 5px;
+}
+
+.signature {
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.return-link {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.return-button {
+    display: inline-block;
+    background-color: var(--button-color);
+    color: white !important;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none !important;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.return-button:hover {
+    background-color: var(--button-hover-color);
+    text-decoration: none !important;
+    transform: translateY(-2px);
+}
+
+.return-button:active {
+    transform: scale(0.98);
+}
