@@ -46,7 +46,7 @@ class UploadController
 
                     <form action="?action=upload_gif" method="post" enctype="multipart/form-data" onsubmit="showPleaseWait()">
                         <div class="mt10 model-selector">
-                            <label for="model">Select Stream Deck Model:</label>
+                            <label for="model">Select Model:</label>
                             <select name="model" id="model" onchange="updateModelMessage()" required>
                                 <option value="" disabled selected>-- Select --</option>
                                 <option value="regular">Stream Deck (480x288, 96x96 tiles, 15 buttons )</option>
@@ -79,14 +79,18 @@ class UploadController
                             I'll be happy to add it!
                         </p>
                     </div>
-                    <div class="mt10">
-                        <p>Want to see the code?</p>
-                        <p class="mt5">
-                            <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank">GitHub</a>
-                        </p>
+                    <div class="mt10 footer">
+                        <div class="want-to-see-code">
+                            <p>Check the code?</p>
+                            <p class="mt5">
+                                <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank">GitHub</a>
+                            </p>
+                        </div>
+                        <div class="buy-me-a-coffe">
+                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="ssperandio" data-color="#9298c9" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#F7F7F7" data-coffee-color="#FFDD00" ></script>
+                        </div>
                     </div>
                 </div>
-
                 <script>
                 // Clear the error message
                 function clearErrorMessage() {

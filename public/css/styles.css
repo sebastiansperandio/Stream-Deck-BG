@@ -13,9 +13,9 @@ html, body {
 
 :root {
     --primary-color: indigo;
-    --button-color: #204cfe;
+    --button-color: #623198;
     --button-hover-color: #1231ac;
-    --link-color: #204cfe;
+    --link-color: #623198;
 }
 
 /* 
@@ -84,12 +84,12 @@ form {
 
 /* "please wait" message */
 .model_message {
-    background-color: #d1ecf1;
-    color: #004085;
+    background-color: #c0c6dd;
+    color: #623198;
     font-weight: bold;
     padding: 10px;
     width: 100%;
-    border: 1px solid #004085;
+    border: 1px solid #623198;
     border-radius: 4px;
 }
 
@@ -154,7 +154,14 @@ form {
 .form-container a {
     color: var(--link-color);
     text-decoration: none;
+    font-weight: bolder;
 }
+
+.bmc-btn-container a {
+    color: #623198 !important;
+    text-decoration: none !important;
+}
+
 .form-container a:hover {
     text-decoration: underline;
 }
@@ -202,4 +209,13 @@ form {
     width: 100%;
     font-weight: bold;
     text-align: center;
+}
+
+.footer {
+    display: flex;
+    gap: 8rem;
+}
+
+.bmc-btn {
+    text-decoration: none;
 }
