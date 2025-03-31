@@ -276,3 +276,38 @@ form {
 .return-button:active {
     transform: scale(0.98);
 }
+
+/* Upcoming features section */
+.upcoming-features {
+    width: 100%;
+    padding: 15px;
+    background-color: #f5f0ff;
+    border-radius: 8px;
+    border-left: 4px solid var(--button-color);
+}
+
+.upcoming-features h3 {
+    color: var(--button-color);
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.feature-card {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.feature-card h4 {
+    color: var(--button-color);
+    margin-bottom: 5px;
+}
+
+.support-message {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    color: #623198;
+}

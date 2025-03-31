@@ -98,6 +98,22 @@ class UploadController
                             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="ssperandio" data-color="#9298c9" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#F7F7F7" data-coffee-color="#FFDD00" ></script>
                         </div> -->
                     </div>
+                    <div class="mt20 upcoming-features">
+                        <h3>Coming Soon</h3>
+                        <p>Your donations help fund the development of exciting new features:</p>
+                        
+                        <div class="feature-card">
+                            <h4>Stream Deck Profile Export</h4>
+                            <p>Soon you'll be able to export a complete Stream Deck profile with all the sliced GIFs already assigned to the right buttons - no more manual assignment!</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4>Stream Deck SDK Plugin</h4>
+                            <p>We're developing an official Elgato Stream Deck plugin that will connect directly to this tool, automating the entire process of creating animated backgrounds.</p>
+                        </div>
+                        
+                        <p class="support-message">Every coffee you buy helps bring these features to life faster! ☕</p>
+                    </div>
                 </div>
                 <script>
                 // Clear the error message
