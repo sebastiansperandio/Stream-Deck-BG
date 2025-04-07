@@ -77,9 +77,10 @@ form {
     color: #856404;
     font-weight: bold;
     padding: 10px;
-    width: 100%;
+    width: 80%;
     border: 1px solid #ffeeba;
     border-radius: 4px;
+    margin: 0 auto;
 }
 
 /* "please wait" message */
@@ -88,9 +89,10 @@ form {
     color: #623198;
     font-weight: bold;
     padding: 10px;
-    width: 100%;
+    width: 80%;
     border: 1px solid #623198;
     border-radius: 4px;
+    margin: 0 auto;
 }
 /* Styles for the model selector */
 .model-selector {
@@ -207,8 +209,8 @@ form {
     border: 1px solid #f5c6cb;
     border-radius: 4px;
     padding: 10px;
-    margin-bottom: 20px;
-    width: 100%;
+    margin: 0 auto;
+    width: 80%;
     font-weight: bold;
     text-align: center;
 }
