@@ -14,7 +14,7 @@ html, body {
 :root {
     --primary-color: indigo;
     --button-color: #623198;
-    --button-hover-color: #1231ac;
+    --button-hover-color: #7a4db5;
     --link-color: #623198;
 }
 
@@ -55,11 +55,10 @@ form {
 .form-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;  /* Align everything to the left edge */
-    row-gap: 20px;            /* Vertical spacing between elements */
-
+    align-items: flex-start;
+    row-gap: 10px;
     width: 100%;
-    max-width: 500px;         /* width limit */
+    max-width: 800px;
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
@@ -68,6 +67,7 @@ form {
 
 .form-container h1, .form-container h3 {
     text-align: center;
+    margin: 0 auto;
 }
 
 /* "please wait" message */
@@ -77,7 +77,7 @@ form {
     color: #856404;
     font-weight: bold;
     padding: 10px;
-    width: 100%;          /* taking up the entire width of the container */
+    width: 100%;
     border: 1px solid #ffeeba;
     border-radius: 4px;
 }
@@ -92,19 +92,51 @@ form {
     border: 1px solid #623198;
     border-radius: 4px;
 }
+/* Styles for the model selector */
+.model-selector {
+    display: flex;
+    flex-direction: column; /* Stack label and select vertically */
+    align-items: flex-start; /* Align to the left */
+    row-gap: 5px; /* Add spacing between label and select */
+    width: 80%; /* Ensure it takes the full width of the container */
+    margin: 0 auto;
+}
+
+.model-selector label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-color, #333); /* Use a text color variable or fallback */
+}
+
+.model-selector select {
+    width: 100%; /* Make the dropdown take the full width */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1rem;;
+}
+
+.model-selector select:focus {
+    border-color: var(--button-color, #204cfe); /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(32, 76, 254, 0.5); /* Add a subtle glow */
+    outline: none; /* Remove default outline */
+}
 
 /* Large clickable area for drag & drop */
 .drop-zone {
     border: 2px solid #ccc;
     border-radius: 8px;
     background: #f9f9f9;
-    margin-bottom: 0.5rem;
+    margin: 0.5rem auto 0.5rem auto;
     padding: 40px 20px;
-    text-align: center;    /* If you want the internal text centered */
+    text-align: center;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
-    width: 100%; 
-    margin-top: 0.5rem;
+    width: 80%; 
 }
 
 .drop-zone:hover {
@@ -132,18 +164,21 @@ form {
 .upload-btn {
     background-color: var(--button-color);
     color: #fff;
-    padding: 12px 20px;
+    padding: 15px 25px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     transition: background-color 0.3s ease, transform 0.1s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    display: block;
 }
 
 .upload-btn:hover {
     background-color: var(--button-hover-color);
+    transform: translateY(-2px);
 }
 .upload-btn:active {
     transform: scale(0.98);
@@ -166,39 +201,6 @@ form {
     text-decoration: underline;
 }
 
-/* Styles for the model selector */
-.model-selector {
-    display: flex;
-    flex-direction: column; /* Stack label and select vertically */
-    align-items: flex-start; /* Align to the left */
-    row-gap: 5px; /* Add spacing between label and select */
-    width: 100%; /* Ensure it takes the full width of the container */
-}
-
-.model-selector label {
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--text-color, #333); /* Use a text color variable or fallback */
-}
-
-.model-selector select {
-    width: 100%; /* Make the dropdown take the full width */
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-    color: #333;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 1rem;;
-}
-
-.model-selector select:focus {
-    border-color: var(--button-color, #204cfe); /* Highlight border on focus */
-    box-shadow: 0 0 5px rgba(32, 76, 254, 0.5); /* Add a subtle glow */
-    outline: none; /* Remove default outline */
-}
-
 .error-message {
     background-color: #f8d7da;
     color: #721c24;
@@ -211,16 +213,11 @@ form {
     text-align: center;
 }
 
-.footer {
-    display: flex;
-    gap: 8rem;
-}
-
 .bmc-btn {
     text-decoration: none;
 }
 
-/* Estilos para la página de agradecimiento */
+
 .thank-you-content {
     width: 100%;
     display: flex;
@@ -285,6 +282,10 @@ form {
     border-radius: 8px;
     border-left: 4px solid var(--button-color);
 }
+.upcoming-features-header {
+    display: flex;
+    justify-content: space-between;
+}
 
 .upcoming-features h3 {
     color: var(--button-color);
@@ -305,9 +306,87 @@ form {
     margin-bottom: 5px;
 }
 
+.feature-card ul {
+    padding-left: 1.25rem;
+    margin: 0;
+}
+
+.feature-card li {
+    margin-bottom: 8px;
+    color: #333;
+}
+
 .support-message {
     font-weight: bold;
     text-align: center;
     margin-top: 15px;
     color: #623198;
+}
+
+/* Grid layout for help cards */
+.help-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Responsive grid */
+    gap: 20px; /* Space between cards */
+    width: 100%;
+}
+
+/* Individual help cards */
+.help-card {
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center; /* Center content */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hover effect */
+}
+
+/* Hover effect for cards */
+.help-card:hover {
+    transform: translateY(-5px); /* Slight lift */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+}
+
+/* Title inside the card */
+.help-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Links inside the card */
+.help-card a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 0.95rem;
+}
+
+.help-card a:hover {
+    text-decoration: underline;
+}
+
+.paypal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+.pp-96GEXVM9RCTLS{
+    text-align:center;
+    border:none;
+    border-radius:0.25rem;
+    min-width:11.625rem;
+    padding:0 2rem;
+    height:2.625rem;
+    font-weight:bold;
+    background-color:#FFD140;
+    color:#000000;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:1rem;
+    line-height:1.25rem;
+    cursor:pointer;
 }

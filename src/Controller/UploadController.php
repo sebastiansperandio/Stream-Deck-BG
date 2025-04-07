@@ -27,12 +27,13 @@ class UploadController
                 <meta charset="UTF-8">
                 <title>Stream Deck GIF Background</title>
                 <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+                <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
             </head>
             <body>
-               
                 <div class="form-container">
-                    <h1>Stream Deck GIF Background</h1>
-                    <h3>Select your Stream Deck model and upload a GIF</h3>
+                    <h1>Stream Deck GIF Background Slicer</h1>
+                    <h3>IT'S TOTALLY FREE</h3>
                     
                     <?php if ( ! empty( $error_message ) ): ?>
                         <div id="error_message" class="error-message">
@@ -46,62 +47,85 @@ class UploadController
 
                     <form action="?action=upload_gif" method="post" enctype="multipart/form-data" onsubmit="showPleaseWait()">
                         <div class="mt10 model-selector">
-                            <label for="model">Select Model:</label>
+                            <label for="model"></label>
                             <select name="model" id="model" onchange="updateModelMessage()" required>
-                                <option value="" disabled selected>-- Select --</option>
-                                <option value="regular">Stream Deck (480x288, 96x96 tiles, 15 buttons )</option>
-                                <option value="plus">Stream Deck Plus (384x192, 96x96 tiles, 8 buttons)</option>
-                                <option value="xl">Stream Deck XL (768x384, 96x96 tiles, 32 buttons)</option>
+                                <option value="" disabled selected>-- Select Model --</option>
+                                <option value="regular">Stream Deck (15 buttons - 480x288)</option>
+                                <option value="plus">Stream Deck Plus (8 buttons - 384x192)</option>
+                                <option value="xl">Stream Deck XL (32 buttons - 768x384)</option>
                             </select>
                         </div>
 
                         <p id="model_message" class="mt10"></p>
                         
                         <div id="drop_zone" class="drop-zone">
-                            <!-- El párrafo inicial. Actualizaremos su contenido al arrastrar/soltar o seleccionar. -->
+                            <i class="fas fa-cloud-upload" style="font-size: 2rem; color: #623198; margin-bottom: 5px;"></i>
                             <p id="drop_zone_text">Drag &amp; drop your GIF here, or click to select</p>
                             <input type="file" id="gif_file" class="file-input" name="gif_file" accept=".gif" required onchange="clearErrorMessage();">
                         </div>
 
-                        <button type="submit" class="upload-btn">Upload GIF</button>
+                        <button type="submit" class="upload-btn">Slice &amp; Download GIF</button>
                     </form>
-                    <div class="mt20">
-                        <p>Need a sample GIF?</p>
-                        <p class="mt5">
-                            <a id="download_sample_link" href="?action=download_sample&model=xl">Download</a>
-                        </p>
-                    </div>
-
-                    <div class="mt10">
-                        <p>Need support for other Stream Deck models?</p>
-                        <p class="mt5">
-                            <a href="mailto:sebastiansperandio@gmail.com">Email me</a>. 
-                            I'll be happy to add it!
-                        </p>
-                    </div>
-                    <div class="mt10 footer">
-                        <div class="want-to-see-code">
-                            <p>Check the code?</p>
+                    <div class="mt20 help-grid">
+                        <div class="help-card">
+                            <p class="help-title">Need a sample GIF?</p>
                             <p class="mt5">
-                                <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank">GitHub</a>
+                                <a id="download_sample_link" href="?action=download_sample&model=xl">
+                                    <i class="fas fa-download" style="margin-right: 6px;"></i>Download
+                                </a>
                             </p>
                         </div>
-                        <div class="buy-me-a-coffe-pp">
-                            <style>.pp-96GEXVM9RCTLS{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;}</style>
-                            <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
-                            <input class="pp-96GEXVM9RCTLS" type="submit" value="Buy me a coffe" />
-                            <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
-                            <section> Con la tecnología de <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
-                            </form>
+                        <div class="help-card">
+                            <p class="help-title">Need help creating a GIF?</p>
+                            <p class="mt5">
+                                <a href="https://www.youtube.com/watch?v=rCs1jdN-w1Y" target="_blank">
+                                    <i class="fas fa-video" style="margin-right: 6px;"></i>Watch tutorial
+                                </a>
+                            </p>
                         </div>
-                        <!-- <div class="buy-me-a-coffe">
-                            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="ssperandio" data-color="#9298c9" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#F7F7F7" data-coffee-color="#FFDD00" ></script>
-                        </div> -->
+                        <div class="help-card">
+                            <p class="help-title">Need support for other models?</p>
+                            <p class="mt5">
+                                <a href="mailto:sebastiansperandio@gmail.com">
+                                    <i class="fas fa-envelope" style="margin-right: 6px;"></i>Email me
+                                </a>
+                            </p>
+                        </div>
+                        <div class="help-card">
+                            <p class="help-title">Check the code?</p>
+                            <p class="mt5">
+                                <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank">
+                                    <i class="fab fa-github" style="margin-right: 5px;"></i>GitHub
+                                </a>
+                            </p>
+                        </div>
                     </div>
+                    
                     <div class="mt20 upcoming-features">
-                        <h3>Coming Soon</h3>
-                        <p>Your donations help fund the development of exciting new features:</p>
+                        <div class="upcoming-features-header">
+                            <div class="title-and-subtitle">
+                                <h3>Coming Soon</h3>
+                                <p>Your donations help fund the development of exciting new features:</p>
+                            </div>
+                            <div class="buy-me-a-coffe">
+                                <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+                                    <input class="pp-96GEXVM9RCTLS" type="submit" value="Buy me a coffe" />
+                                    <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
+                                </form>
+                            </div>
+                        </div>
                         
+                        <div class="feature-card">
+                            <h4>✨ AI-Powered Features</h4>
+                            <ul>
+                                <li><strong>Smart focus:</strong> Automatically detects faces or objects and centers them in the most relevant tiles.</li>
+                                <li><strong>GIF quality enhancer:</strong> Improve resolution and clarity of low-quality GIFs with intelligent upscaling.</li>
+                                <li><strong>Video to GIF AI:</strong> Upload a video and let AI choose and convert the best segment into a looping GIF background.</li>
+                                <li><strong>Seamless loop detection:</strong> AI analyzes frames to identify and refine perfect loops.</li>
+                                <li><strong>Optimized compression:</strong> Automatically reduce size by detecting redundant frames without losing quality.</li>
+                            </ul>
+                        </div>
+
                         <div class="feature-card">
                             <h4>Stream Deck Profile Export</h4>
                             <p>Soon you'll be able to export a complete Stream Deck profile with all the sliced GIFs already assigned to the right buttons - no more manual assignment!</p>
@@ -111,7 +135,7 @@ class UploadController
                             <h4>Stream Deck SDK Plugin</h4>
                             <p>We're developing an official Elgato Stream Deck plugin that will connect directly to this tool, automating the entire process of creating animated backgrounds.</p>
                         </div>
-                        
+
                         <p class="support-message">Every coffee you buy helps bring these features to life faster! ☕</p>
                     </div>
                 </div>
@@ -124,7 +148,6 @@ class UploadController
                     }
                 }
 
-                // Muestra "please wait" cuando se envía el formulario
                 function showPleaseWait() {
                     document.getElementById('please_wait_message').style.display = 'block';
                 }
@@ -150,13 +173,11 @@ class UploadController
                     clearErrorMessage();
                 }
 
-                // ---------- DRAG & DROP + Feedback del nombre de archivo ----------
                 const dropZone      = document.getElementById('drop_zone');
                 const dropZoneText  = document.getElementById('drop_zone_text');
                 const fileInput     = document.getElementById('gif_file');
                 const defaultMsg    = 'Drag & drop your GIF here, or click to select';
 
-                // Evitar la acción por defecto del navegador
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                     dropZone.addEventListener(eventName, e => {
                         e.preventDefault();
@@ -164,45 +185,38 @@ class UploadController
                     }, false);
                 });
 
-                // Destacar el drop zone al arrastrar
                 ['dragenter', 'dragover'].forEach(eventName => {
                     dropZone.addEventListener(eventName, () => {
                         dropZone.classList.add('dragover');
                     }, false);
                 });
 
-                // Quitar destaque al salir o soltar
                 ['dragleave', 'drop'].forEach(eventName => {
                     dropZone.addEventListener(eventName, () => {
                         dropZone.classList.remove('dragover');
                     }, false);
                 });
 
-                // Manejar el drop: asignamos archivos al input, y mostramos nombre
                 dropZone.addEventListener('drop', e => {
                     const droppedFiles = e.dataTransfer.files;
                     if (droppedFiles && droppedFiles.length > 0) {
-                        fileInput.files = droppedFiles; // Se asigna al input
+                        fileInput.files = droppedFiles;
                         showFileNames(droppedFiles);
                     }
                 }, false);
 
-                // Permitir clic en la zona para abrir el diálogo de archivos
                 dropZone.addEventListener('click', () => {
                     fileInput.click();
                 });
 
-                // Si el usuario hace clic y selecciona archivo(s) manualmente
                 fileInput.addEventListener('change', () => {
                     if (fileInput.files && fileInput.files.length > 0) {
                         showFileNames(fileInput.files);
                     } else {
-                        // Si se cancela la selección
                         dropZoneText.innerText = defaultMsg;
                     }
                 });
 
-                // Función para mostrar los nombres de los archivos seleccionados
                 function showFileNames(fileList) {
                     if (fileList.length === 1) {
                         dropZoneText.innerText = fileList[0].name;
@@ -224,7 +238,8 @@ class UploadController
     public function handle_upload( string $model = 'xl' ): void
     {
         if (!isset($_FILES['gif_file']) || $_FILES['gif_file']['error'] !== UPLOAD_ERR_OK) {
-            exit('Error: No valid GIF file was provided.');
+            $this->show_form('Error: No valid GIF file was provided.');
+            return;
         }
 
         $tmp_name      = $_FILES['gif_file']['tmp_name'];
