@@ -346,7 +346,7 @@ class UploadController
                                 <a href="/" class="return-button">
                                     <i class="fas fa-home"></i> Home Page
                                 </a>
-                                <a href="<?= htmlspecialchars($download_file) ?>" class="manual-download">
+                                <a href="/?action=download" class="manual-download">
                                     <i class="fas fa-download"></i> Download ZIP
                                 </a>
                             </div>
