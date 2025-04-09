@@ -50,8 +50,9 @@ class UploadController
                             <label for="model"></label>
                             <select name="model" id="model" onchange="updateModelMessage()" required>
                                 <option value="" disabled selected>-- Select Model --</option>
+                                <option value="mini">Stream Deck Mini (6 buttons - 288x192)</option>
                                 <option value="regular">Stream Deck (15 buttons - 480x288)</option>
-                                <option value="plus">Stream Deck Plus (8 buttons - 384x192)</option>
+                                <option value="plus">Stream Deck Plus | Neo (8 buttons - 384x192)</option>
                                 <option value="xl">Stream Deck XL (32 buttons - 768x384)</option>
                             </select>
                         </div>
@@ -158,12 +159,14 @@ class UploadController
                     const modelMessage = document.getElementById('model_message');
                     const downloadLink = document.getElementById('download_sample_link');
 
-                    if (modelSelect.value === 'xl') {
-                        modelMessage.innerText = 'For this model, you need a GIF of 768x384 pixels.';
+                    if (modelSelect.value === 'mini') {
+                        modelMessage.innerText = 'For this model, you need a GIF of 288x192 pixels.';
                     } else if (modelSelect.value === 'plus') {
                         modelMessage.innerText = 'For this model, you need a GIF of 384x192 pixels.';
                     } else if (modelSelect.value === 'regular') {
                         modelMessage.innerText = 'For this model, you need a GIF of 480x288 pixels.';
+                    } else if (modelSelect.value === 'xl') {
+                        modelMessage.innerText = 'For this model, you need a GIF of 768x384 pixels.';
                     }
 
                     downloadLink.href = `?action=download_sample&model=${modelSelect.value}`;
@@ -284,6 +287,10 @@ class UploadController
             'regular' => [
                 'path' => __DIR__ . '/../../public/sample/sample_480x288.gif',
                 'filename' => 'sample_480x288.gif',
+            ],
+            'mini' => [
+                'path' => __DIR__ . '/../../public/sample/sample_288x192.gif',
+                'filename' => 'sample_288x192.gif',
             ],
             default => exit('Invalid model specified.'),
         };
