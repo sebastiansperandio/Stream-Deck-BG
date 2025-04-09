@@ -21,6 +21,8 @@ if ( 'upload_gif' === $action && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
     $model  = $_GET['model'] ?? 'xl';
     // Download a sample GIF.
     $upload_controller->download_sample( $model );
+} elseif ( 'success' === $action ) {
+    $upload_controller->show_success();
 } else {
     // Show the initial HTML form
     $upload_controller->show_form();

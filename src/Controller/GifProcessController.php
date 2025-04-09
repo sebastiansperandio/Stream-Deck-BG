@@ -106,23 +106,30 @@ class GifProcessController
         if (!file_exists($zip_path)) {
             exit("Error: ZIP file not found for download.");
         }
-
-        // Ensures the script doesn't end prematurely if the user cancels download
-        ignore_user_abort(true);
-
-        // Send headers
-        header('Content-Type: application/zip');
-        header('Content-Disposition: attachment; filename="' . basename($zip_path) . '"');
-        header('Content-Length: ' . filesize($zip_path));
-
-        // Stream the file
-        readfile($zip_path);
-        flush();
-
-        // Remove the entire temp directory after sending the file
+    
+        // Inicia la sesión y crea un directorio único para el usuario
+        session_start();
+        $session_id = session_id();
+        $user_dir = __DIR__ . '/../../public/downloads/' . $session_id;
+        if (!is_dir($user_dir)) {
+            mkdir($user_dir, 0777, true);
+        }
+    
+        // Genera un nombre único para el archivo ZIP
+        $unique_id = uniqid('zip_', true);
+        $public_zip_path = $user_dir . '/' . $unique_id . '.zip';
+    
+        // Copia el archivo ZIP al directorio del usuario
+        copy($zip_path, $public_zip_path);
+    
+        // Guarda la ruta del archivo en la sesión
+        $_SESSION['download_file'] = '/public/downloads/' . $session_id . '/' . $unique_id . '.zip';
+    
+        // Limpia el directorio temporal
         $this->remove_directory_recursive($temp_dir);
-
-        // End the script
+    
+        // Redirige a la página de éxito
+        header('Location: /?action=success');
         exit;
     }
 

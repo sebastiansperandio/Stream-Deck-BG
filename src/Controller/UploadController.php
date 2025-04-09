@@ -18,13 +18,13 @@ class UploadController
      */
     public function show_form( string $error_message='' ): void
     {
-        // Ajusta la ruta a tu stylesheet
         $css_url = '/public/css/styles.css';
         ?>
         <!DOCTYPE html>
         <html lang="en">
             <head>
                 <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Stream Deck GIF Background</title>
                 <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -310,5 +310,120 @@ class UploadController
 
         readfile( $path );
         exit;
+    }
+
+    /**
+     * Muestra la página de éxito con confeti y descarga automática.
+     */
+    public function show_success(): void {
+        $css_url = '/public/css/styles.css';
+        session_start();
+        $download_file = $_SESSION['download_file'] ?? '';
+        ?>
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>Success! - Stream Deck GIF Background</title>
+                <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+                <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
+                <meta http-equiv="refresh" content="10;url=/" /> <!-- Aumentado de 5 a 10 segundos -->
+            </head>
+            <body>
+                <div class="form-container">
+                    <h1>Success!</h1>
+                    <div class="success-message">
+                        <i class="fas fa-check-circle success-icon"></i>
+                        <p>Your GIF has been processed successfully!</p>
+                        
+                        <?php if (!empty($download_file)): ?>
+                            <p class="download-info">Your download will start automatically in a moment...</p>
+                            
+                            <div class="button-container">
+                                <a href="/" class="return-button">
+                                    <i class="fas fa-home"></i> Home Page
+                                </a>
+                                <a href="<?= htmlspecialchars($download_file) ?>" class="manual-download">
+                                    <i class="fas fa-download"></i> Download ZIP
+                                </a>
+                            </div>
+                        <?php else: ?>
+                            <a href="/" class="return-button mt20">
+                                <i class="fas fa-home"></i> Return to Home Page
+                            </a>
+                        <?php endif; ?>
+                        
+                        <p class="redirect-info">You will be redirected to the home page in 10 seconds</p>
+                    </div>
+                </div>
+                
+                <!-- Script para confeti -->
+                <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+                <script>
+                    // Función para lanzar confeti
+                    function launchConfetti() {
+                        var count = 200;
+                        var defaults = {
+                            origin: { y: 0.7 }
+                        };
+
+                        function fire(particleRatio, opts) {
+                            confetti({
+                                ...defaults,
+                                ...opts,
+                                particleCount: Math.floor(count * particleRatio)
+                            });
+                        }
+
+                        // Lanzar confeti desde diferentes posiciones
+                        fire(0.25, {
+                            spread: 26,
+                            startVelocity: 55,
+                        });
+                        fire(0.2, {
+                            spread: 60,
+                        });
+                        fire(0.35, {
+                            spread: 100,
+                            decay: 0.91,
+                            scalar: 0.8
+                        });
+                        fire(0.1, {
+                            spread: 120,
+                            startVelocity: 25,
+                            decay: 0.92,
+                            scalar: 1.2
+                        });
+                        fire(0.1, {
+                            spread: 120,
+                            startVelocity: 45,
+                        });
+                        
+                        // Efecto de confeti continuo
+                        setTimeout(() => {
+                            fire(0.15, {
+                                spread: 150,
+                                origin: { y: 0.2 }
+                            });
+                        }, 1200);
+                    }
+                    
+                    // Cuando se carga la página
+                    window.onload = function() {
+                        // Primero lanzamos el confeti
+                        launchConfetti();
+                        
+                        // Después de 2.5 segundos iniciamos la descarga automática
+                        <?php if (!empty($download_file)): ?>
+                        setTimeout(function() {
+                            window.location.href = "<?= htmlspecialchars($download_file) ?>";
+                        }, 2500);
+                        <?php endif; ?>
+                    };
+                </script>
+            </body>
+        </html>
+        <?php
     }
 }
