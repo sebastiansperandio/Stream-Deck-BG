@@ -1,6 +1,6 @@
 # Stream Deck GIF Background Slicer
 
-This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck models, including **Stream Deck**, **Stream Deck Plus** and **Stream Deck XL**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.
+This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck models, including **Stream Deck Mini**, **Stream Deck**, **Stream Deck Plus**, **Stream Deck Neo** and **Stream Deck XL**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.
 
 You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https://sdbg.crabstudio.com.ar/)
 
@@ -16,7 +16,7 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
 - **Automatic slicing** of the GIF frames into 96×96 tiles.  
 - **Separate** each tile into a fully animated mini-GIF.  
 - **Package** all mini-GIFs into a single ZIP for easy download.  
-- **Sample GIF** available for both models (288x192 for mini, 480x288 for regular, 384×192 for Plus/Neo and 768×384 for XL,) to test or verify correct dimensions.
+- **Sample GIF** available for all models (288x192 for mini, 480x288 for regular, 384×192 for Plus/Neo and 768×384 for XL,) to test or verify correct dimensions.
 
 ---
 
