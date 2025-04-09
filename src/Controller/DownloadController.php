@@ -42,8 +42,6 @@ class DownloadController
 
         readfile($file_path);
 
-        unset($_SESSION['download_file']);
-
         exit;
     }
 }
