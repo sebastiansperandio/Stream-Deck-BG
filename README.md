@@ -16,7 +16,7 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
 - **Automatic slicing** of the GIF frames into 96×96 tiles.  
 - **Separate** each tile into a fully animated mini-GIF.  
 - **Package** all mini-GIFs into a single ZIP for easy download.  
-- **Sample GIF** available for both models (480x288 for regular, 384×192 for Plus and 768×384 for XL,) to test or verify correct dimensions.
+- **Sample GIF** available for both models (288x192 for mini, 480x288 for regular, 384×192 for Plus/Neo and 768×384 for XL,) to test or verify correct dimensions.
 
 ---
 
@@ -24,8 +24,10 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
 
 | Model                | GIF Dimensions | Tile Size | Grid Layout |
 |----------------------|----------------|-----------|-------------|
+| **Stream Deck Mini** | 288×192        | 96×96     | 2×3         |
 | **Stream Deck**      | 480×288        | 96×96     | 5×3         |
 | **Stream Deck Plus** | 384×192        | 96×96     | 4×2         |
+| **Stream Deck Neo**  | 384×192        | 96×96     | 4×2         |
 | **Stream Deck XL**   | 768×384        | 96×96     | 8×4         |
 
 ---
@@ -54,11 +56,12 @@ You can also **use this tool online** at [https://sdbg.crabstudio.com.ar/](https
    - Open the `index.php` from your project folder in a browser, or visit [https://sdbg.crabstudio.com.ar/](https://sdbg.crabstudio.com.ar/).
 2. **(Optional) Download a Sample GIF**  
    - Click **Download** to get a pre-sized GIF for your selected model:
+     - **Stream Deck Mini**: 288x192
      - **Stream Deck**: 480×288
-     - **Stream Deck Plus**: 384×192
+     - **Stream Deck Plus/Neo**: 384×192
      - **Stream Deck XL**: 768×384
 3. **Select Your Model**  
-   - Use the dropdown to select **Stream Deck XL** or **Stream Deck Plus**.
+   - Use the dropdown to select **Stream Deck Mini**, **Stream Deck**, **Stream Deck Plus | Neo** or **Stream Deck XL**.
 4. **Drag & Drop or Click**  
    - Drag your GIF onto the box or click to open the file dialog.  
    - You should see the file name appear once it’s selected.

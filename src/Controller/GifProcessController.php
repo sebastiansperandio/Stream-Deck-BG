@@ -16,12 +16,15 @@ class GifProcessController
 {
     /**
      * Dimensions for different Stream Deck models.
+     * 'mini' model: 288x192
+     * 'regular' model: 480x288
      * 'xl' model: 768x384
      * 'plus' model: 384x192
      * These dimensions are used to determine how to slice the GIF.
      * @var array
      */
     private const MODEL_DIMENSIONS = [
+        'mini'    => ['width' => 288, 'height' => 192],
         'regular' => ['width' => 480, 'height' => 288],
         'xl'      => ['width' => 768, 'height' => 384],
         'plus'    => ['width' => 384, 'height' => 192],
