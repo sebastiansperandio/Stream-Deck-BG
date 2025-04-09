@@ -313,7 +313,9 @@ class UploadController
     }
 
     /**
-     * Muestra la página de éxito con confeti y descarga automática.
+     * Show the success page after processing the GIF.
+     * 
+     * @return void
      */
     public function show_success(): void {
         $css_url = '/public/css/styles.css';
@@ -358,10 +360,8 @@ class UploadController
                     </div>
                 </div>
                 
-                <!-- Script para confeti -->
                 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
                 <script>
-                    // Función para lanzar confeti
                     function launchConfetti() {
                         var count = 200;
                         var defaults = {
@@ -376,7 +376,6 @@ class UploadController
                             });
                         }
 
-                        // Lanzar confeti desde diferentes posiciones
                         fire(0.25, {
                             spread: 26,
                             startVelocity: 55,
@@ -400,7 +399,6 @@ class UploadController
                             startVelocity: 45,
                         });
                         
-                        // Efecto de confeti continuo
                         setTimeout(() => {
                             fire(0.15, {
                                 spread: 150,
@@ -409,16 +407,14 @@ class UploadController
                         }, 1200);
                     }
                     
-                    // Cuando se carga la página
                     window.onload = function() {
-                        // Primero lanzamos el confeti
                         launchConfetti();
                         
-                        // Después de 2.5 segundos iniciamos la descarga automática
                         <?php if (!empty($download_file)): ?>
+                        // Automatically redirect to download after 3.5 seconds.
                         setTimeout(function() {
-                            window.location.href = "<?= htmlspecialchars($download_file) ?>";
-                        }, 2500);
+                            window.location.href = "/?action=download";
+                        }, 3500);
                         <?php endif; ?>
                     };
                 </script>

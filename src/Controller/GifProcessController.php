@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php 
+declare(strict_types=1);
 
 namespace SDBG\Controller;
 
@@ -107,7 +108,7 @@ class GifProcessController
             exit("Error: ZIP file not found for download.");
         }
     
-        // Inicia la sesión y crea un directorio único para el usuario
+        // Start a session to store the download file path and create a unique directory
         session_start();
         $session_id = session_id();
         $user_dir = __DIR__ . '/../../public/downloads/' . $session_id;
@@ -115,20 +116,20 @@ class GifProcessController
             mkdir($user_dir, 0777, true);
         }
     
-        // Genera un nombre único para el archivo ZIP
+        // Generate a unique filename for the ZIP file
         $unique_id = uniqid('zip_', true);
         $public_zip_path = $user_dir . '/' . $unique_id . '.zip';
     
-        // Copia el archivo ZIP al directorio del usuario
+        // Copy the ZIP file to the public directory
         copy($zip_path, $public_zip_path);
     
-        // Guarda la ruta del archivo en la sesión
+        // Set the download file path in the session
         $_SESSION['download_file'] = '/public/downloads/' . $session_id . '/' . $unique_id . '.zip';
-    
-        // Limpia el directorio temporal
+        
+        // Remove tmp directory
         $this->remove_directory_recursive($temp_dir);
     
-        // Redirige a la página de éxito
+        // Redirect to the success page
         header('Location: /?action=success');
         exit;
     }

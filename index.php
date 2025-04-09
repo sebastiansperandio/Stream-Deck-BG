@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use SDBG\Controller\UploadController;
+use SDBG\Controller\DownloadController;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -23,6 +24,9 @@ if ( 'upload_gif' === $action && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
     $upload_controller->download_sample( $model );
 } elseif ( 'success' === $action ) {
     $upload_controller->show_success();
+} elseif ( 'download' === $action ) {
+    $download_controller = new DownloadController();
+    $download_controller->download();
 } else {
     // Show the initial HTML form
     $upload_controller->show_form();
