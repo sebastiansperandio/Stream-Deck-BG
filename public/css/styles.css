@@ -222,10 +222,26 @@ form {
     border: 1px solid #f5c6cb;
     border-radius: 4px;
     padding: 10px;
-    margin: 0 auto;
+    margin: 0.5rem auto;
     width: 80%;
     font-weight: bold;
     text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.error-message i {
+    margin-right: 5px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.upload-btn:disabled {
+    background-color: #b5a4c7;
+    transform: none !important;
+    cursor: not-allowed;
 }
 
 .bmc-btn {

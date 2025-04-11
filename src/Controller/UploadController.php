@@ -44,6 +44,10 @@ class UploadController
                     <div id="please_wait_message">
                         Please wait a moment, we are processing your GIF. This can take a few minutes...
                     </div>
+                    
+                    <div id="size_error_message" class="error-message" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> The GIF you selected is larger than 2MB. Please use a smaller file.
+                    </div>
 
                     <form action="?action=upload_gif" method="post" enctype="multipart/form-data" onsubmit="showPleaseWait()">
                         <div class="mt10 model-selector">
@@ -150,6 +154,7 @@ class UploadController
                     if (errorMessage) {
                         errorMessage.remove(); // Remove the error message element
                     }
+                    showSizeError(false);
                 }
 
                 function showPleaseWait() {
@@ -161,15 +166,16 @@ class UploadController
                     const modelSelect  = document.getElementById('model');
                     const modelMessage = document.getElementById('model_message');
                     const downloadLink = document.getElementById('download_sample_link');
+                    const infoIcon     = '<i class="fas fa-info-circle"></i>';
 
                     if (modelSelect.value === 'mini') {
-                        modelMessage.innerText = 'For this model, you need a GIF of 288x192 pixels.';
+                        modelMessage.innerHTML = `${infoIcon} For this model, you need a GIF of 288x192 pixels.`;
                     } else if (modelSelect.value === 'plus') {
-                        modelMessage.innerText = 'For this model, you need a GIF of 384x192 pixels.';
+                        modelMessage.innerHTML = `${infoIcon} For this model, you need a GIF of 384x192 pixels.`;
                     } else if (modelSelect.value === 'regular') {
-                        modelMessage.innerText = 'For this model, you need a GIF of 480x288 pixels.';
+                        modelMessage.innerHTML = `${infoIcon} For this model, you need a GIF of 480x288 pixels.`;
                     } else if (modelSelect.value === 'xl') {
-                        modelMessage.innerText = 'For this model, you need a GIF of 768x384 pixels.';
+                        modelMessage.innerHTML = `${infoIcon} For this model, you need a GIF of 768x384 pixels.`;
                     }
 
                     downloadLink.href = `?action=download_sample&model=${modelSelect.value}`;
@@ -183,6 +189,45 @@ class UploadController
                 const dropZoneText  = document.getElementById('drop_zone_text');
                 const fileInput     = document.getElementById('gif_file');
                 const defaultMsg    = 'Drag & drop your GIF here, or click to select';
+                const uploadButton  = document.querySelector('.upload-btn');
+
+                // Deactivate the upload button if the file is too large
+                function showSizeError(show) {
+                    const sizeErrorMessage = document.getElementById('size_error_message');
+                    if (show) {
+                        sizeErrorMessage.style.display = 'block';
+                        uploadButton.disabled = true;
+                        uploadButton.style.opacity = '0.5';
+                        uploadButton.style.cursor = 'not-allowed';
+                    } else {
+                        sizeErrorMessage.style.display = 'none';
+                        uploadButton.disabled = false;
+                        uploadButton.style.opacity = '1';
+                        uploadButton.style.cursor = 'pointer';
+                    }
+                }
+
+                fileInput.addEventListener('change', () => {
+                    // Clear any previous errors
+                    clearErrorMessage();
+                    showSizeError(false);
+                    
+                    if (fileInput.files && fileInput.files.length > 0) {
+                        // Check file size (2MB = 2 * 1024 * 1024 bytes)
+                        const maxSize = 2 * 1024 * 1024; // 2MB
+                        
+                        if (fileInput.files[0].size > maxSize) {
+                            showSizeError(true);
+                            fileInput.value = ''; // Clear the input
+                            dropZoneText.innerText = defaultMsg;
+                            return;
+                        }
+                        
+                        showFileNames(fileInput.files);
+                    } else {
+                        dropZoneText.innerText = defaultMsg;
+                    }
+                });
 
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                     dropZone.addEventListener(eventName, e => {
