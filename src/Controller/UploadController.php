@@ -288,9 +288,26 @@ class UploadController
      */
     public function handle_upload( string $model = 'xl' ): void
     {
-        if (!isset($_FILES['gif_file']) || $_FILES['gif_file']['error'] !== UPLOAD_ERR_OK) {
-            $this->show_form('Error: No valid GIF file was provided.');
+        if ( ! isset( $_FILES['gif_file'] ) ) {
+            $this->show_form( 'Error: No file was uploaded.' );
             return;
+        }
+        
+        // Check for specific upload errors
+        switch ( $_FILES['gif_file']['error'] ) {
+            case UPLOAD_ERR_OK:
+                // No error, continue processing
+                break;
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $this->show_form( 'Error: Your GIF exceeds the maximum size limit of 2MB. Please compress your file or use a smaller GIF.' );
+                return;
+            case UPLOAD_ERR_PARTIAL:
+                $this->show_form( 'Error: The GIF was only partially uploaded. Please try again.' );
+                return;
+            default:
+                $this->show_form( 'Error: No valid GIF file was provided.' );
+                return;
         }
 
         $tmp_name      = $_FILES['gif_file']['tmp_name'];
