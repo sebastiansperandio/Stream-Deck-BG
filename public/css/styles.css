@@ -187,7 +187,7 @@ form {
     font-weight: 500;
     transition: background-color 0.3s ease, transform 0.1s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
+    margin: 20px auto 5px auto;
     display: block;
 }
 
@@ -315,9 +315,17 @@ form {
 }
 .upcoming-features-header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
+.buy-me-a-coffee{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 5px auto 0 auto;
+}
 .upcoming-features h3 {
     color: var(--button-color);
     margin-bottom: 10px;
@@ -411,8 +419,8 @@ form {
     border:none;
     border-radius:0.25rem;
     min-width:11.625rem;
-    padding:0 2rem;
-    height:2.625rem;
+    padding:0 1rem;
+    height:2.5rem;
     font-weight:bold;
     background-color:#FFD140;
     color:#000000;
@@ -425,7 +433,7 @@ form {
 /* Success page styles */
 .success-message {
     text-align: center;
-    padding: 40px 20px;
+    padding: 20px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -487,4 +495,17 @@ form {
 .feature-word {
     font-weight: bold;
     color: var(--button-color);
+}
+
+.donation-suggestion {
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.donation-suggestion p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
 }

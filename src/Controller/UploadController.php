@@ -74,7 +74,7 @@ class UploadController
 
                         <button type="submit" class="upload-btn">Slice &amp; Download GIF</button>
                     </form>
-                    <div class="mt20 help-grid">
+                    <div class="mt5 help-grid">
                         <div class="help-card">
                             <p class="help-title">Need a sample GIF?</p>
                             <p class="mt5">
@@ -115,12 +115,6 @@ class UploadController
                                 <h3>Coming Soon</h3>
                                 <p>Your donations help fund the development of exciting new features:</p>
                             </div>
-                            <div class="buy-me-a-coffe">
-                                <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
-                                    <input class="pp-96GEXVM9RCTLS" type="submit" value="Buy me a coffe" />
-                                    <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
-                                </form>
-                            </div>
                         </div>
                         
                         <div class="feature-card">
@@ -141,10 +135,22 @@ class UploadController
                         
                         <div class="feature-card">
                             <h4>Stream Deck SDK Plugin</h4>
-                            <p>We're developing an official Elgato Stream Deck plugin that will connect directly to this tool, automating the entire process of creating animated backgrounds.</p>
+                            <p>We're developing a Stream Deck plugin that will connect directly to this tool, automating the entire process of creating animated backgrounds.</p>
                         </div>
 
                         <p class="support-message">Every coffee you buy helps bring these features to life faster! ☕</p>
+                        <div class="buy-me-a-coffee">
+                            <div class="ko-fi">
+                                <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#b494fa', 'W7W01DBHJE');kofiwidget2.draw();</script> 
+                            </div>
+                            <div class="paypal">
+                                <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" >
+                                    <button type="submit" class="pp-96GEXVM9RCTLS">
+                                        <i class="fab fa-paypal" style="margin-right: 10px;"></i>Buy me a coffee
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -395,7 +401,7 @@ class UploadController
                 <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
                 <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
-                <meta http-equiv="refresh" content="10;url=/" /> <!-- Aumentado de 5 a 10 segundos -->
+                <!-- <meta http-equiv="refresh" content="10;url=/" /> --> <!-- Aumentado de 5 a 10 segundos -->
             </head>
             <body>
                 <div class="form-container">
@@ -416,12 +422,27 @@ class UploadController
                                 </a>
                             </div>
                         <?php else: ?>
-                            <a href="/" class="return-button mt20">
-                                <i class="fas fa-home"></i> Return to Home Page
+                            <a href="/" class="return-button mt10">
+                                <i class="fas fa-redo" style="margin-right:10px"></i> Create Another GIF
                             </a>
                         <?php endif; ?>
                         
-                        <p class="redirect-info">You will be redirected to the home page in 10 seconds</p>
+                        <div class="donation-suggestion mt20">
+                            <p>Did you find this tool helpful? Consider supporting future development!</p>
+                            <div class="buy-me-a-coffee">
+                                <div class="ko-fi">
+                                    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#b494fa', 'W7W01DBHJE');kofiwidget2.draw();</script> 
+                                </div>
+                                <div class="paypal">
+                                    <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" >
+                                        <button type="submit" class="pp-96GEXVM9RCTLS">
+                                            <i class="fab fa-paypal" style="margin-right: 10px;"></i>Buy me a coffee
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
                 
