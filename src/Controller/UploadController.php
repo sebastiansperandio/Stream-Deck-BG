@@ -64,6 +64,9 @@ class UploadController
                             <p id="drop_zone_text">Drag &amp; drop your GIF here, or click to select</p>
                             <input type="file" id="gif_file" class="file-input" name="gif_file" accept=".gif" required onchange="clearErrorMessage();">
                         </div>
+                        <div class="size-limit-warning">
+                            <p>Maximum file size: <span class="feature-word">2MB</span>. Only <span class="feature-word">GIF</span> format is supported.</p>
+                        </div>
 
                         <button type="submit" class="upload-btn">Slice &amp; Download GIF</button>
                     </form>

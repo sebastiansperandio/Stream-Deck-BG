@@ -148,6 +148,11 @@ form {
     transition: background-color 0.2s ease, border-color 0.2s ease;
     width: 80%; 
 }
+.size-limit-warning {
+    margin: 1rem auto 0.5rem auto;
+    text-align: center;
+    width: 80%;
+}
 
 .drop-zone:hover {
     background-color: #eee;
@@ -461,4 +466,9 @@ form {
 .manual-download:hover {
     background-color: #45a049;
     transform: translateY(-2px);
+}
+
+.feature-word {
+    font-weight: bold;
+    color: var(--button-color);
 }
