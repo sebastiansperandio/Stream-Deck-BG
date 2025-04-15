@@ -33,7 +33,17 @@ class UploadController
             <body>
                 <div class="form-container">
                     <h1>Stream Deck GIF Background Slicer</h1>
-                    <h3>IT'S TOTALLY FREE</h3>
+                    <div class="gh-star-btn">
+                        <h3>IT'S TOTALLY FREE</h3>
+                        <iframe
+                            src="https://ghbtns.com/github-btn.html?user=sebastiansperandio&repo=Stream-Deck-BG&type=star&count=true"
+                            frameborder="0"
+                            scrolling="0"
+                            width="170"
+                            height="30"
+                            title="GitHub">
+                        </iframe>
+                    </div>
                     
                     <?php if ( ! empty( $error_message ) ): ?>
                         <div id="error_message" class="error-message">
@@ -71,7 +81,6 @@ class UploadController
                         <div class="size-limit-warning">
                             <p>Maximum file size: <span class="feature-word">2MB</span>. Only <span class="feature-word">GIF</span> format is supported.</p>
                         </div>
-
                         <button type="submit" class="upload-btn">Slice &amp; Download GIF</button>
                     </form>
                     <div class="mt5 help-grid">
@@ -442,7 +451,18 @@ class UploadController
                                 </div>
                             </div>
                         </div>
-                       
+                        <!-- GitHub Star Button -->
+                        <div class="github-star mt20">
+                            <p>Like this tool? Give it a ⭐ on GitHub!</p>
+                            <iframe
+                                src="https://ghbtns.com/github-btn.html?user=sebastiansperandio&repo=Stream-Deck-BG&type=star&count=true"
+                                frameborder="0"
+                                scrolling="0"
+                                width="120"
+                                height="20"
+                                title="GitHub">
+                            </iframe>
+                        </div>
                     </div>
                 </div>
                 

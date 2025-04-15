@@ -187,7 +187,7 @@ form {
     font-weight: 500;
     transition: background-color 0.3s ease, transform 0.1s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    margin: 20px auto 5px auto;
+    margin: 15px auto 5px auto;
     display: block;
 }
 
@@ -508,4 +508,29 @@ form {
     font-size: 1rem;
     color: #666;
     margin-bottom: 15px;
+}
+
+.gh-star-btn {
+    display: flex;
+    margin: 0 auto;
+    text-align: center;
+    gap: 1rem;
+}
+
+.github-star {
+    display: flex;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    gap: 1rem;
+}
+
+.github-star p {
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.github-star iframe {
+    margin-top: 5px;
+    display: inline-block;
 }
