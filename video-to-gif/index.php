@@ -11,8 +11,16 @@ $page_title = "Video to GIF AI";
 
   <form id="upload-form" action="upload.php" method="POST" enctype="multipart/form-data" class="tool-form">
     <div class="form-group">
+      <label>
+        <input type="checkbox" name="use_scene" value="1" checked>
+        Use smart scene detection (AI-light)
+      </label>
+    </div>
+
+    <div class="form-group">
       <input type="file" name="video" id="video-input" accept="video/*" required class="input-file">
     </div>
+
     <div class="form-group">
       <button type="submit" class="button-main">Convert to GIF</button>
     </div>
