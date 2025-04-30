@@ -9,23 +9,32 @@ $inputVideo = $_FILES['video']['tmp_name'];
 $basename = uniqid("gif_", true);
 $outputGif = "outputs/{$basename}.gif";
 
-// Ensure outputs directory exists
 if (!file_exists("outputs")) {
     mkdir("outputs", 0777, true);
 }
 
-// Build FFmpeg command
 $ffmpeg = '/home/sdbgdes/ffmpeg-git-20180203-amd64-static/ffmpeg';
-$cmd = "$ffmpeg -i {$inputVideo} -vf \"select='gt(scene,0.4)',scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
-  
-exec($cmd . " 2>&1", $output, $return_var);
 
-if ($return_var === 0 && file_exists($outputGif)) {
+// Attempt with "scene detection" (IA-light)
+$cmd1 = "$ffmpeg -i {$inputVideo} -vf \"select='gt(scene,0.4)',scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
+exec($cmd1 . " 2>&1", $output1, $return1);
+
+// If failed or file is empty, fallback to normal conversion
+if (!file_exists($outputGif) || filesize($outputGif) === 0) {
+    $cmd2 = "$ffmpeg -i {$inputVideo} -vf \"scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
+    exec($cmd2 . " 2>&1", $output2, $return2);
+    $output = array_merge($output1, ["\nFallback attempt:\n"], $output2);
+    $return_var = $return2;
+} else {
+    $output = $output1;
+    $return_var = $return1;
+}
+
+if ($return_var === 0 && file_exists($outputGif) && filesize($outputGif) > 0) {
     echo "<h2>✅ GIF Created!</h2><img src='{$outputGif}' alt='Generated GIF' class='generated-gif'><br>";
     echo "<a href='{$outputGif}' download class='button-main'>Download GIF</a>";
 } else {
     echo "<p class='error-message'>❌ Error generating GIF.</p>";
     echo "<pre><code>" . htmlspecialchars(implode("\n", $output)) . "</code></pre>";
 }
-
 ?>
