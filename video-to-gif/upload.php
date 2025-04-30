@@ -17,26 +17,21 @@ if (!file_exists("outputs")) {
 
 $ffmpeg = '/home/sdbgdes/ffmpeg-git-20180203-amd64-static/ffmpeg';
 
-// Commands
 $cmd1 = "$ffmpeg -i {$inputVideo} -vf \"select='gt(scene,0.4)',scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
 $cmd2 = "$ffmpeg -i {$inputVideo} -vf \"scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
 
-$output = [];
 $return_var = 1;
 
 if ($use_scene_detection) {
     exec($cmd1 . " 2>&1", $output1, $return1);
     if (!file_exists($outputGif) || filesize($outputGif) === 0) {
         exec($cmd2 . " 2>&1", $output2, $return2);
-        $output = array_merge($output1, ["\nFallback without scene detection:"], $output2);
         $return_var = $return2;
     } else {
-        $output = $output1;
         $return_var = $return1;
     }
 } else {
     exec($cmd2 . " 2>&1", $output2, $return2);
-    $output = $output2;
     $return_var = $return2;
 }
 
@@ -45,8 +40,8 @@ if ($return_var === 0 && file_exists($outputGif) && filesize($outputGif) > 0) {
     echo "<a href='{$outputGif}' download class='button-main'>Download GIF</a>";
 } else {
     echo "<p class='error-message'>❌ Failed to generate the GIF.</p>";
-    echo "<p class='error-message'>This might happen if the video is too short or has too little motion.</p>";
+    echo "<p class='error-message'>This might happen if the video is too short or has very little motion.</p>";
     echo "<p class='error-message'>Please try again with a longer or more dynamic video.</p>";
-    echo "<pre><code>" . htmlspecialchars(implode("\n", $output)) . "</code></pre>";
+    echo "<p class='error-message'>Tip: you may also try disabling the <em>smart scene detection</em> option below the upload field.</p>";
 }
 ?>

@@ -15,6 +15,7 @@ $page_title = "Video to GIF AI";
         <input type="checkbox" name="use_scene" value="1" checked>
         Use smart scene detection (AI-light)
       </label>
+      <p class="field-hint">Recommended for dynamic videos. For short or static videos, try unchecking this option.</p>
     </div>
 
     <div class="form-group">
