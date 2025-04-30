@@ -4,3 +4,7 @@ composer.lock
 .htaccess
 .vscode/
 temp/
+php.ini
+user.ini
+error_log
+public/downloads
