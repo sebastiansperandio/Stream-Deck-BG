@@ -1,0 +1,5 @@
+/* Optional custom styles for GIF module */
+.generated-gif {
+  max-width: 100%;
+  margin-top: 1rem;
+}
