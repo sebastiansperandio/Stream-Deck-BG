@@ -17,7 +17,8 @@ if (!file_exists("outputs")) {
 
 $ffmpeg = '/home/sdbgdes/ffmpeg-git-20180203-amd64-static/ffmpeg';
 
-$cmd1 = "$ffmpeg -i {$inputVideo} -vf \"select='gt(scene,0.4)',scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
+// Updated: more sensitive scene detection threshold
+$cmd1 = "$ffmpeg -i {$inputVideo} -vf \"select='gt(scene,0.1)',scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
 $cmd2 = "$ffmpeg -i {$inputVideo} -vf \"scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
 
 $return_var = 1;
