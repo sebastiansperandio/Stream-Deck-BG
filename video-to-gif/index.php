@@ -1,6 +1,6 @@
 <?php
 $page_title = "Video to GIF AI";
-include_once("../includes/header.php");
+//include_once("../includes/header.php");
 ?>
 
 <div class="tool-box">
@@ -24,4 +24,4 @@ include_once("../includes/header.php");
 
 <script src="assets/script.js"></script>
 
-<?php include_once("../includes/footer.php"); ?>
+<?php //include_once("../includes/footer.php"); ?>
