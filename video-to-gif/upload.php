@@ -15,10 +15,12 @@ if (!file_exists("outputs")) {
 }
 
 // Build FFmpeg command
-$cmd = "ffmpeg -i {$inputVideo} -vf \
+/* $cmd = "ffmpeg -i {$inputVideo} -vf \
   "select='gt(scene,0.4)',scale=480:-1,fps=12" \
-  -t 3 -y {$outputGif}";
-
+  -t 3 -y {$outputGif}"; */
+$ffmpeg = '/home/sdbgdes/ffmpeg-git-20180203-amd64-static/ffmpeg';
+$cmd = "$ffmpeg -i {$inputVideo} -vf \"select='gt(scene,0.4)',scale=480:-1,fps=12\" -t 3 -y {$outputGif}";
+  
 exec($cmd, $output, $return_var);
 
 if ($return_var === 0 && file_exists($outputGif)) {
