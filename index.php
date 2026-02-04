@@ -13,8 +13,8 @@ ini_set('max_execution_time', '300');
 // Decide which "action" to perform:
 $action = $_GET['action'] ?? 'show_form';
 $upload_controller = new UploadController();
-
-if ( 'upload_gif' === $action && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
+// comentario.
+if ( 'upload_png' === $action && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
     $model = $_POST['model'] ?? 'xl';
     // Process the uploaded file and proceed to the next step
     $upload_controller->handle_upload( $model );
