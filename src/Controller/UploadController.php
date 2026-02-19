@@ -330,7 +330,7 @@ class UploadController
 
         // Create a unique directory for processing
         $unique_id = uniqid('gif_', true);
-        $temp_dir  = __DIR__ . '/../../temp/' . $unique_id;
+        $temp_dir  = sys_get_temp_dir() . '/' . $unique_id;
         if (!is_dir($temp_dir)) {
             mkdir($temp_dir, 0777, true);
         }

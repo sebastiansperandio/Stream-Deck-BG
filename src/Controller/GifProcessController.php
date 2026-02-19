@@ -102,33 +102,39 @@ class GifProcessController
      *
      * @return void
      */
+    /**
+     * Sends the ZIP file to the browser by storing its path in the session
+     * for the DownloadController to serve, then redirects to success.
+     * 
+     * Note related to Vercel/Serverless:
+     * We're saving the file to /tmp (sys_get_temp_dir) which is ephemeral.
+     * This relies on the "download" action hitting the SAME server instance
+     * or a shared filesystem (which Vercel doesn't have).
+     * 
+     * @param string $zip_path The path to the zip file.
+     * @param string $temp_dir The temporary directory to remove after streaming the file (not used here anymore as we need the file for download).
+     *
+     * @return void
+     */
     private function force_zip_download(string $zip_path, string $temp_dir): void
     {
         if (!file_exists($zip_path)) {
             exit("Error: ZIP file not found for download.");
         }
     
-        // Start a session to store the download file path and create a unique directory
-        session_start();
-        $session_id = session_id();
-        $user_dir = __DIR__ . '/../../public/downloads/' . $session_id;
-        if (!is_dir($user_dir)) {
-            mkdir($user_dir, 0777, true);
+        // Start a session to store the download file path
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
-    
-        // Generate a unique filename for the ZIP file
-        $unique_id = uniqid('zip_', true);
-        $public_zip_path = $user_dir . '/' . $unique_id . '.zip';
-    
-        // Copy the ZIP file to the public directory
-        copy($zip_path, $public_zip_path);
-    
-        // Set the download file path in the session
-        $_SESSION['download_file'] = '/public/downloads/' . $session_id . '/' . $unique_id . '.zip';
+
+        // We'll leave the file in its temp location ($zip_path).
+        // The DownloadController will need to read it from there.
+        // We DO NOT delete $temp_dir here because the user hasn't downloaded it yet.
+        // In a proper production app, you'd use S3 or a cron job to clean up /tmp.
+
+        // Store the absolute path in the session
+        $_SESSION['download_file'] = $zip_path;
         
-        // Remove tmp directory
-        $this->remove_directory_recursive($temp_dir);
-    
         // Redirect to the success page
         header('Location: /?action=success');
         exit;
