@@ -373,11 +373,6 @@ export default function UploadForm() {
                     </ul>
                 </div>
 
-                <div className="feature-card">
-                    <h4>Stream Deck Profile Export</h4>
-                    <p>Soon you&apos;ll be able to export a complete Stream Deck profile with all the sliced GIFs already assigned to the right buttons - no more manual assignment!</p>
-                </div>
-                
                 <p className="support-message">Every coffee you buy helps bring these features to life faster! ☕</p>
                 <div className="buy-me-a-coffee">
                     <div className="ko-fi">
