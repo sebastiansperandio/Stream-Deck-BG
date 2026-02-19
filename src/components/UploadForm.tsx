@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, ChangeEvent, DragEvent } from 'react';
+import React, { useState, useRef, useEffect, ChangeEvent, DragEvent } from 'react';
 import Script from 'next/script';
 import { processGif } from '@/utils/processGif';
 
@@ -17,6 +17,39 @@ export default function UploadForm() {
     const [showSuccess, setShowSuccess] = useState(false);
     
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Auto-download and confetti when success page appears
+    useEffect(() => {
+        if (!showSuccess || !successDownloadUrl) return;
+
+        // Trigger automatic download
+        const a = document.createElement('a');
+        a.href = successDownloadUrl;
+        a.download = 'stream_deck_gifs.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        // Launch confetti
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+        script.onload = () => {
+            const confetti = (window as any).confetti;
+            if (!confetti) return;
+            const count = 200;
+            const defaults = { origin: { y: 0.7 } };
+            const fire = (ratio: number, opts: object) =>
+                confetti({ ...defaults, ...opts, particleCount: Math.floor(count * ratio) });
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+            setTimeout(() => fire(0.15, { spread: 150, origin: { y: 0.2 } }), 1200);
+        };
+        document.body.appendChild(script);
+        return () => { document.body.removeChild(script); };
+    }, [showSuccess, successDownloadUrl]);
 
     const handleModelChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setModel(e.target.value as ModelType);
