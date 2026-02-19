@@ -6,7 +6,7 @@ This project is designed to **recut** larger GIFs into multiple smaller **animat
 
 ---
 
-![Sample Stream Deck GIF Slicer](public/img/demo.jpeg)
+![Stream Deck GIF Background Slicer](public/img/sdbg-demo.png)
 
 ---
 
