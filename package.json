@@ -1,0 +1,21 @@
+{
+  "name": "sdbg",
+  "version": "1.0.0",
+  "description": "This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck models, including **Stream Deck Mini**, **Stream Deck**, **Stream Deck Plus**, **Stream Deck Neo** and **Stream Deck XL**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-build": "cp node_modules/gifsicle/vendor/gifsicle api/gifsicle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-sebastiansperandio:sebastiansperandio/Stream-Deck-BG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "gifsicle": "^7.0.1"
+  }
+}
