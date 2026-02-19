@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vercel-build": "cp node_modules/gifsicle/vendor/gifsicle api/gifsicle"
+    "vercel-build": "mkdir -p api && curl -L https://github.com/kohler/gifsicle/releases/download/v1.95/gifsicle-1.95-linux64.tar.gz | tar -xz --strip-components=1 -C api/ gifsicle-1.95/src/gifsicle && chmod +x api/gifsicle"
   },
   "repository": {
     "type": "git",
