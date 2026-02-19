@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Basic reset */
 * {
     box-sizing: border-box;
@@ -533,4 +537,16 @@ form {
 .github-star iframe {
     margin-top: 5px;
     display: inline-block;
+}
+
+/* Device Image Active State */
+.device-image {
+    display: none;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.device-image.active {
+    display: block;
 }
