@@ -18,7 +18,7 @@ class UploadController
      */
     public function show_form( string $error_message='' ): void
     {
-        $css_url = '/public/css/styles.css';
+        $css_url = '/css/styles.css';
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -27,8 +27,11 @@ class UploadController
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Stream Deck GIF Background</title>
                 <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-                <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+                <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+                <link rel="manifest" href="/favicon/site.webmanifest">
             </head>
             <body>
                 <div class="form-container">
@@ -62,6 +65,11 @@ class UploadController
                     <form action="?action=upload_gif" method="post" enctype="multipart/form-data" onsubmit="showPleaseWait()">
                         <div class="mt10 model-selector">
                             <label for="model"></label>
+                            <img src="/img/Stream_Deck_Mini.png" alt="Stream Deck Mini" class="device-image active" data-model="mini">
+        <img src="/img/Stream_Deck_MK2.png" alt="Stream Deck MK.2" class="device-image" data-model="original">
+        <img src="/img/Stream_Deck_Plus.png" alt="Stream Deck +" class="device-image" data-model="plus">
+        <img src="/img/Stream_Deck_Neo.png" alt="Stream Deck Neo" class="device-image" data-model="neo">
+        <img src="/img/Stream_Deck_XL.png" alt="Stream Deck XL" class="device-image" data-model="xl">
                             <select name="model" id="model" onchange="updateModelMessage()" required>
                                 <option value="" disabled selected>-- Select Model --</option>
                                 <option value="mini">Stream Deck Mini (6 buttons - 288x192)</option>
@@ -162,6 +170,7 @@ class UploadController
                         </div>
                     </div>
                 </div>
+                <script src="/js/script.js"></script>
                 <script>
                 // Clear the error message
                 function clearErrorMessage() {
@@ -398,7 +407,7 @@ class UploadController
      * @return void
      */
     public function show_success(): void {
-        $css_url = '/public/css/styles.css';
+        $css_url = '/css/styles.css';
         session_start();
         $download_file = $_SESSION['download_file'] ?? '';
         ?>
@@ -409,7 +418,7 @@ class UploadController
                 <title>Success! - Stream Deck GIF Background</title>
                 <link rel="stylesheet" href="<?php echo htmlspecialchars($css_url, ENT_QUOTES); ?>">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-                <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
+                <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
                 <!-- <meta http-equiv="refresh" content="10;url=/" /> --> <!-- Aumentado de 5 a 10 segundos -->
             </head>
             <body>

@@ -96,13 +96,19 @@ class GifsicleService
 
         if ($return_var !== 0) {
             $output_str = implode("\n", $output);
+            
+            // Debug file existence
+            $debug_dir = __DIR__ . '/../../api';
+            $files_in_api = is_dir($debug_dir) ? implode(', ', scandir($debug_dir)) : 'Dir not found';
+
             throw new \Exception(sprintf(
-                "Could not read GIF info. Command: %s. Output: %s. Return Var: %d. Binary Exists: %s. Permissions: %s", 
+                "Could not read GIF info. Command: %s. Output: %s. Return Var: %d. Binary Exists: %s. Permissions: %s. Files in api: %s", 
                 $command, 
                 $output_str, 
                 $return_var,
                 file_exists($this->gifsicle_path) ? 'Yes' : 'No',
-                substr(sprintf('%o', fileperms($this->gifsicle_path)), -4)
+                substr(sprintf('%o', fileperms($this->gifsicle_path)), -4),
+                $files_in_api
             ));
         }
 
