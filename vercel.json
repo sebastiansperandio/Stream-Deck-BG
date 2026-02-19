@@ -6,11 +6,7 @@
     },
     "routes": [
         {
-            "src": "/(public/.*)",
-            "dest": "/$1"
-        },
-        {
-            "src": "/(.*)",
+            "src": "/(?!public/).*",
             "dest": "/api/index.php"
         }
     ]

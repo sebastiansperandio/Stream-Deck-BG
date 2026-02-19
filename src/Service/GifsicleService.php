@@ -95,7 +95,15 @@ class GifsicleService
         exec($command, $output, $return_var);
 
         if ($return_var !== 0) {
-            throw new \Exception("Could not read GIF info: " . implode("\n", $output));
+            $output_str = implode("\n", $output);
+            throw new \Exception(sprintf(
+                "Could not read GIF info. Command: %s. Output: %s. Return Var: %d. Binary Exists: %s. Permissions: %s", 
+                $command, 
+                $output_str, 
+                $return_var,
+                file_exists($this->gifsicle_path) ? 'Yes' : 'No',
+                substr(sprintf('%o', fileperms($this->gifsicle_path)), -4)
+            ));
         }
 
         // Parse output looking for "logical screen WxH"
