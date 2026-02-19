@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useRef, useEffect, ChangeEvent, DragEvent } from 'react';
-import Script from 'next/script';
-import { processGif } from '@/utils/processGif';
+import { processGif, TileData } from '@/utils/processGif';
+import { createTilesZip } from '@/utils/createZip';
+import { exportStreamDeckProfile } from '@/utils/exportProfile';
 
 // Types
 type ModelType = 'mini' | 'regular' | 'plus' | 'xl' | 'neo';
@@ -13,18 +14,20 @@ export default function UploadForm() {
     const [error, setError] = useState<string>('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [isDragOver, setIsDragOver] = useState(false);
-    const [successDownloadUrl, setSuccessDownloadUrl] = useState<string>('');
+    const [tilesData, setTilesData] = useState<TileData[]>([]);
+    const [zipUrl, setZipUrl] = useState<string>('');
+    const [profileUrl, setProfileUrl] = useState<string>('');
     const [showSuccess, setShowSuccess] = useState(false);
     
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Auto-download and confetti when success page appears
+    // Auto-download ZIP and confetti when success page appears
     useEffect(() => {
-        if (!showSuccess || !successDownloadUrl) return;
+        if (!showSuccess || !zipUrl) return;
 
-        // Trigger automatic download
+        // Trigger automatic ZIP download
         const a = document.createElement('a');
-        a.href = successDownloadUrl;
+        a.href = zipUrl;
         a.download = 'stream_deck_gifs.zip';
         document.body.appendChild(a);
         a.click();
@@ -49,7 +52,7 @@ export default function UploadForm() {
         };
         document.body.appendChild(script);
         return () => { document.body.removeChild(script); };
-    }, [showSuccess, successDownloadUrl]);
+    }, [showSuccess, zipUrl]);
 
     const handleModelChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setModel(e.target.value as ModelType);
@@ -109,9 +112,18 @@ export default function UploadForm() {
         setError('');
 
         try {
-            const zipBlob = await processGif(file, model);
-            const url = URL.createObjectURL(zipBlob);
-            setSuccessDownloadUrl(url);
+            // 1. Decode and slice the GIF into individual tile data
+            const tiles = await processGif(file, model);
+            setTilesData(tiles);
+
+            // 2. Package as a standard ZIP
+            const zipBlob = await createTilesZip(tiles, model);
+            setZipUrl(URL.createObjectURL(zipBlob));
+
+            // 3. Generate the Stream Deck profile
+            const profileBlob = await exportStreamDeckProfile(tiles, model);
+            setProfileUrl(URL.createObjectURL(profileBlob));
+
             setShowSuccess(true);
         } catch (err: any) {
             console.error(err);
@@ -132,28 +144,65 @@ export default function UploadForm() {
     };
 
     if (showSuccess) {
+        const handleReset = (e: React.MouseEvent) => {
+            e.preventDefault();
+            setShowSuccess(false);
+            setFile(null);
+            setModel('');
+            setZipUrl('');
+            setProfileUrl('');
+            setTilesData([]);
+        };
+
         return (
             <div className="form-container">
                 <h1>Success!</h1>
                 <div className="success-message">
                     <i className="fas fa-check-circle success-icon"></i>
                     <p>Your GIF has been processed successfully!</p>
-                    {successDownloadUrl && (
+                    {zipUrl && (
                         <>
-                            <p className="download-info">Your download is ready.</p>
-                            <div className="button-container">
-                                <a href="/" className="return-button" onClick={(e) => {
-                                    e.preventDefault();
-                                    setShowSuccess(false);
-                                    setFile(null);
-                                    setModel('');
-                                    setSuccessDownloadUrl('');
-                                }}>
-                                    <i className="fas fa-home"></i> Home Page
+                            <p className="download-info">Your files are ready to download:</p>
+                            <div className="button-container" style={{ flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+                                {/* Standard ZIP */}
+                                <a href={zipUrl} download="stream_deck_gifs.zip" className="manual-download">
+                                    <i className="fas fa-file-archive" style={{ marginRight: '8px' }}></i>
+                                    Download GIF Tiles (ZIP)
                                 </a>
-                                <a href={successDownloadUrl} download="stream_deck_gifs.zip" className="manual-download">
-                                    <i className="fas fa-download"></i> Download ZIP
+
+                                {/* Stream Deck Profile */}
+                                {profileUrl && (
+                                    <a href={profileUrl} download="GIF_Background.streamDeckProfile" style={{
+                                        display: 'inline-block',
+                                        backgroundColor: '#1a1a2e',
+                                        color: 'white',
+                                        padding: '12px 20px',
+                                        borderRadius: '4px',
+                                        textDecoration: 'none',
+                                        fontWeight: 'bold',
+                                        transition: 'background-color 0.3s, transform 0.1s',
+                                        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
+                                    }}>
+                                        <i className="fas fa-stream" style={{ marginRight: '8px' }}></i>
+                                        Export as Stream Deck Profile
+                                    </a>
+                                )}
+
+                                {/* Reset */}
+                                <a href="/" className="return-button" onClick={handleReset}>
+                                    <i className="fas fa-redo" style={{ marginRight: '8px' }}></i>
+                                    Slice another GIF
                                 </a>
+                            </div>
+
+                            <div style={{ marginTop: '12px', padding: '10px', background: '#f5f0ff', borderRadius: '6px', fontSize: '0.85rem', color: '#555', textAlign: 'left', maxWidth: '440px' }}>
+                                <strong>💡 How to use the Stream Deck Profile:</strong>
+                                <ol style={{ marginTop: '6px', paddingLeft: '18px' }}>
+                                    <li>Open the <strong>Stream Deck</strong> app on your computer.</li>
+                                    <li>Click on <strong>Profiles</strong> → <strong>Import...</strong></li>
+                                    <li>Select the downloaded <code>.streamDeckProfile</code> file.</li>
+                                    <li>The profile will appear with your GIF tiles pre-assigned! 🎉</li>
+                                </ol>
                             </div>
                         </>
                     )}

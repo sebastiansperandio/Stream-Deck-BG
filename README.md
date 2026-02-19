@@ -16,6 +16,7 @@ This project is designed to **recut** larger GIFs into multiple smaller **animat
 - **Automatic slicing** of the GIF frames into 96×96 tiles.
 - **Separate** each tile into a fully animated mini-GIF.
 - **Package** all mini-GIFs into a single ZIP for easy download.
+- **Export as `.streamDeckProfile`** — import directly into the Stream Deck app with tiles pre-assigned. 🆕
 - **Auto-download** of the ZIP as soon as processing is complete.
 - **Confetti celebration** 🎉 when your GIF is ready.
 - **Sample GIFs** available for all models to test correct dimensions.
@@ -115,11 +116,17 @@ npx vercel --prod
    - Click **Slice & Download GIF**. A "Please wait" message shows while slicing is in progress.
 6. **Download**
    - The ZIP will **download automatically** once processing is complete.
-   - A manual **Download ZIP** button is also shown on the success screen.
-   - The ZIP contains multiple sub-GIFs named with the `tile_r#_c#.gif` convention.
-7. **Apply to Stream Deck**
+   - Two download options are shown on the success screen:
+     - **Download GIF Tiles (ZIP)** — individual GIF files named `tile_r#_c#.gif`.
+     - **Export as Stream Deck Profile (`.streamDeckProfile`)** — ready to import directly into Stream Deck.
+7. **Apply to Stream Deck — Option A: Manual (ZIP)**
    - In your Stream Deck software, assign each button its corresponding mini-GIF.
    - When placed correctly, the Stream Deck recreates the original GIF across all buttons.
+8. **Apply to Stream Deck — Option B: Profile Import (recommended)**
+   - Open the **Stream Deck** app.
+   - Go to **Profiles → Import...**
+   - Select the downloaded `.streamDeckProfile` file.
+   - The profile will appear with all GIF tiles pre-assigned to buttons! 🎉
 
 ---
 
@@ -152,7 +159,9 @@ Stream-Deck-BG/
 │   ├── components/
 │   │   └── UploadForm.tsx  # Main drag-and-drop UI component
 │   └── utils/
-│       └── processGif.ts   # Client-side GIF slicing logic
+│       ├── processGif.ts   # GIF decoding and tile slicing
+│       ├── createZip.ts    # ZIP packaging of GIF tiles
+│       └── exportProfile.ts # Stream Deck .streamDeckProfile generator
 ├── package.json
 └── tsconfig.json
 ```
@@ -162,8 +171,7 @@ Stream-Deck-BG/
 ## Future Support / Roadmap
 
 - ✨ **AI-Powered Features**: Smart focus detection, GIF quality enhancer, Video-to-GIF.
-- 📦 **Stream Deck Profile Export**: Auto-assign sliced GIFs to buttons in a profile.
-- 🔌 **Stream Deck SDK Plugin**: Direct integration with the Stream Deck app.
+- � **Stream Deck WebHID Integration**: Auto-detect your device model and push GIFs directly to buttons without importing any file.
 
 ---
 
