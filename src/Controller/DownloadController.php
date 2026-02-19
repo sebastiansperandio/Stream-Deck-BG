@@ -25,7 +25,8 @@ class DownloadController
             exit("Acceso no autorizado.");
         }
 
-        $file_path = $_SERVER['DOCUMENT_ROOT'] . $_SESSION['download_file'];
+        // InGifProcessController, we store the full absolute path in $_SESSION['download_file']
+        $file_path = $_SESSION['download_file'];
 
         // Check if the file exists
         if (!file_exists($file_path)) {
