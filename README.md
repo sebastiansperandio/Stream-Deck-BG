@@ -172,4 +172,16 @@ Stream-Deck-BG/
 - Pull requests are welcome on [GitHub](https://github.com/sebastiansperandio/Stream-Deck-BG).
 - Email [sebastiansperandio@gmail.com](mailto:sebastiansperandio@gmail.com) for advanced questions or new model requests.
 
+---
+
+## Author & Attribution
+
+> 🏆 **This is the original Stream Deck GIF Background Slicer**, pioneered in 2024 by **Sebastian Sperandio**.
+>
+> If you found this tool elsewhere, you're likely looking at a copy. This is the source.
+
+Developed with ❤️ by **Sebastian Sperandio**
+- 📧 [sebastiansperandio@gmail.com](mailto:sebastiansperandio@gmail.com)
+- 💻 [GitHub @sebastiansperandio](https://github.com/sebastiansperandio)
+
 Enjoy your custom Stream Deck animations! 🎉

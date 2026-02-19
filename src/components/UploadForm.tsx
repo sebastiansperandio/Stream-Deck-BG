@@ -348,6 +348,25 @@ export default function UploadForm() {
                     </div>
                 </div>
             </div>
+
+            {/* Footer / Branding */}
+            <div style={{
+                textAlign: 'center',
+                marginTop: '30px',
+                paddingTop: '15px',
+                borderTop: '1px solid #eee',
+                width: '100%',
+            }}>
+                <p style={{ fontSize: '0.85rem', color: '#888', marginBottom: '4px' }}>
+                    🏆 <strong>The original</strong> Stream Deck GIF Background Slicer — pioneered in 2024.
+                </p>
+                <p style={{ fontSize: '0.8rem', color: '#aaa' }}>
+                    Developed with ❤️ by{' '}
+                    <a href="mailto:sebastiansperandio@gmail.com" style={{ color: '#623198', fontWeight: 'bold', textDecoration: 'none' }}>
+                        Sebastian Sperandio
+                    </a>
+                </p>
+            </div>
         </div>
     );
 }
