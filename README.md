@@ -2,7 +2,7 @@
 
 This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato's Stream Deck models, including **Stream Deck Mini**, **Stream Deck**, **Stream Deck Plus**, **Stream Deck Neo** and **Stream Deck XL**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.
 
-🌐 **Use it online at [https://sdbg-drab.vercel.app](https://sdbg-drab.vercel.app)**
+🌐 **Use it online at [https://sdbg.speran.dev](https://sdbg.speran.dev)**
 
 ---
 
@@ -99,7 +99,7 @@ npx vercel --prod
 ## Usage
 
 1. **Open the Tool**
-   - Visit [https://sdbg-drab.vercel.app](https://sdbg-drab.vercel.app) or run locally.
+   - Visit [https://sdbg.speran.dev](https://sdbg.speran.dev) or run locally.
 2. **(Optional) Download a Sample GIF**
    - Click **Download** to get a pre-sized GIF for your selected model:
      - **Stream Deck Mini**: 288x192
