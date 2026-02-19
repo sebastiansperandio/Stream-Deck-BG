@@ -8,3 +8,4 @@ php.ini
 user.ini
 error_log
 public/downloads
+.vercel

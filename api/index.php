@@ -4,7 +4,7 @@ declare(strict_types=1);
 use SDBG\Controller\UploadController;
 use SDBG\Controller\DownloadController;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // Increase memory/time if needed for large GIFs:
 ini_set('memory_limit', '1024M');
