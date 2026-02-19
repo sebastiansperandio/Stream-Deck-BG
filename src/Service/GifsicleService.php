@@ -13,14 +13,14 @@ class GifsicleService
 
     public function __construct()
     {
-        // In Vercel, we copy the binary to the same directory as index.php (api/)
-        $vercel_path = __DIR__ . '/../../api/gifsicle';
+        // In Vercel, we now include the static binary in bin/gifsicle-linux
+        $vercel_bin_path = __DIR__ . '/../../bin/gifsicle-linux';
 
         // Local node_modules path
         $local_npm_path = __DIR__ . '/../../node_modules/.bin/gifsicle';
         
-        if (file_exists($vercel_path)) {
-            $this->gifsicle_path = $vercel_path;
+        if (file_exists($vercel_bin_path)) {
+            $this->gifsicle_path = $vercel_bin_path;
             // Ensure it's executable
             chmod($this->gifsicle_path, 0755);
         } elseif (file_exists($local_npm_path)) {
@@ -98,17 +98,17 @@ class GifsicleService
             $output_str = implode("\n", $output);
             
             // Debug file existence
-            $debug_dir = __DIR__ . '/../../api';
-            $files_in_api = is_dir($debug_dir) ? implode(', ', scandir($debug_dir)) : 'Dir not found';
+            $debug_dir = __DIR__ . '/../../bin';
+            $files_in_bin = is_dir($debug_dir) ? implode(', ', scandir($debug_dir)) : 'Dir bin not found';
 
             throw new \Exception(sprintf(
-                "Could not read GIF info. Command: %s. Output: %s. Return Var: %d. Binary Exists: %s. Permissions: %s. Files in api: %s", 
+                "Could not read GIF info. Command: %s. Output: %s. Return Var: %d. Binary Exists: %s. Permissions: %s. Files in bin: %s", 
                 $command, 
                 $output_str, 
                 $return_var,
                 file_exists($this->gifsicle_path) ? 'Yes' : 'No',
-                substr(sprintf('%o', fileperms($this->gifsicle_path)), -4),
-                $files_in_api
+                file_exists($this->gifsicle_path) ? substr(sprintf('%o', fileperms($this->gifsicle_path)), -4) : 'N/A',
+                $files_in_bin
             ));
         }
 

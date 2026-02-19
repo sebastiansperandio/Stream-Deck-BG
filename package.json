@@ -4,8 +4,7 @@
   "description": "This project is designed to **recut** larger GIFs into multiple smaller **animated** GIFs sized for Elgato’s Stream Deck models, including **Stream Deck Mini**, **Stream Deck**, **Stream Deck Plus**, **Stream Deck Neo** and **Stream Deck XL**. It also supports a real **drag & drop** area for convenient file selection and automatically zips the sliced GIF tiles for easy download.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "vercel-build": "mkdir -p api && curl -L https://github.com/kohler/gifsicle/releases/download/v1.95/gifsicle-1.95-linux64.tar.gz | tar -xz --strip-components=1 -C api/ gifsicle-1.95/src/gifsicle && chmod +x api/gifsicle"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
