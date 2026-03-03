@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, ChangeEvent, DragEvent } from 'reac
 import { processGif, TileData } from '@/utils/processGif';
 import { createTilesZip } from '@/utils/createZip';
 import { exportStreamDeckProfile } from '@/utils/exportProfile';
+import { trackEvent } from '@/utils/analytics';
 
 // Types
 type ModelType = 'mini' | 'regular' | 'plus' | 'xl' | 'neo';
@@ -20,6 +21,14 @@ export default function UploadForm() {
     const [showSuccess, setShowSuccess] = useState(false);
     
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Track page view on mount
+    useEffect(() => {
+        trackEvent('page_view', {
+            referrer: document.referrer || null,
+            user_agent: navigator.userAgent,
+        });
+    }, []);
 
     // Auto-download ZIP and confetti when success page appears
     useEffect(() => {
@@ -55,8 +64,10 @@ export default function UploadForm() {
     }, [showSuccess, zipUrl]);
 
     const handleModelChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        setModel(e.target.value as ModelType);
+        const selectedModel = e.target.value as ModelType;
+        setModel(selectedModel);
         setError('');
+        if (selectedModel) trackEvent('model_selected', { model: selectedModel });
     };
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +92,7 @@ export default function UploadForm() {
             return;
         }
         setFile(selectedFile);
+        trackEvent('file_uploaded', { file_size: selectedFile.size });
     };
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -110,6 +122,8 @@ export default function UploadForm() {
 
         setIsProcessing(true);
         setError('');
+        const startTime = Date.now();
+        trackEvent('processing_started', { model });
 
         try {
             // 1. Decode and slice the GIF into individual tile data
@@ -125,9 +139,11 @@ export default function UploadForm() {
             setProfileUrl(URL.createObjectURL(profileBlob));
 
             setShowSuccess(true);
+            trackEvent('processing_completed', { model, duration_ms: Date.now() - startTime });
         } catch (err: any) {
             console.error(err);
             setError(err.message || 'An error occurred during processing.');
+            trackEvent('processing_failed', { model, error: err.message || 'Unknown error' });
         } finally {
             setIsProcessing(false);
         }
@@ -146,6 +162,7 @@ export default function UploadForm() {
     if (showSuccess) {
         const handleReset = (e: React.MouseEvent) => {
             e.preventDefault();
+            trackEvent('click_reset');
             setShowSuccess(false);
             setFile(null);
             setModel('');
@@ -165,14 +182,14 @@ export default function UploadForm() {
                             <p className="download-info">Your files are ready to download:</p>
                             <div className="button-container" style={{ flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
                                 {/* Standard ZIP */}
-                                <a href={zipUrl} download="stream_deck_gifs.zip" className="manual-download">
+                                <a href={zipUrl} download="stream_deck_gifs.zip" className="manual-download" onClick={() => trackEvent('download_zip')}>
                                     <i className="fas fa-file-archive" style={{ marginRight: '8px' }}></i>
                                     Download GIF Tiles (ZIP)
                                 </a>
 
                                 {/* Stream Deck Profile */}
                                 {profileUrl && (
-                                    <a href={profileUrl} download="GIF_Background.streamDeckProfile" style={{
+                                    <a href={profileUrl} download="GIF_Background.streamDeckProfile" onClick={() => trackEvent('download_profile')} style={{
                                         display: 'inline-block',
                                         backgroundColor: '#1a1a2e',
                                         color: 'white',
@@ -210,11 +227,11 @@ export default function UploadForm() {
                             <p>Did you find this tool helpful? Consider supporting future development!</p>
                             <div className="buy-me-a-coffee">
                                 <div className="ko-fi">
-                                   <a href='https://ko-fi.com/W7W01DBHJE' target='_blank'><img height='36' style={{border:'0px',height:'36px'}} src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                                   <a href='https://ko-fi.com/W7W01DBHJE' target='_blank' onClick={() => trackEvent('click_kofi')}><img height='36' style={{border:'0px',height:'36px'}} src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' alt='Buy Me a Coffee at ko-fi.com' /></a>
                                 </div>
                                 <div className="paypal">
                                     <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" >
-                                        <button type="submit" className="pp-96GEXVM9RCTLS">
+                                        <button type="submit" className="pp-96GEXVM9RCTLS" onClick={() => trackEvent('click_paypal')}>
                                             <i className="fab fa-paypal" style={{marginRight: '10px'}}></i>Buy me a coffee
                                         </button>
                                     </form>
@@ -323,7 +340,7 @@ export default function UploadForm() {
                 <div className="help-card">
                     <p className="help-title">Need a sample GIF?</p>
                     <p className="mt5">
-                        <a id="download_sample_link" href={`/sample/sample_${model === 'mini' ? '288x192' : model === 'plus' ? '384x192' : model === 'regular' ? '480x288' : '768x384'}.gif`} download>
+                        <a id="download_sample_link" href={`/sample/sample_${model === 'mini' ? '288x192' : model === 'plus' ? '384x192' : model === 'regular' ? '480x288' : '768x384'}.gif`} download onClick={() => trackEvent('click_sample_download', { model })}>
                             <i className="fas fa-download" style={{ marginRight: '6px' }}></i>Download
                         </a>
                     </p>
@@ -331,7 +348,7 @@ export default function UploadForm() {
                 <div className="help-card">
                     <p className="help-title">Need help creating a GIF?</p>
                     <p className="mt5">
-                        <a href="https://www.youtube.com/watch?v=rCs1jdN-w1Y" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.youtube.com/watch?v=rCs1jdN-w1Y" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('click_tutorial')}>
                             <i className="fas fa-video" style={{ marginRight: '6px' }}></i>Watch tutorial
                         </a>
                     </p>
@@ -339,7 +356,7 @@ export default function UploadForm() {
                 <div className="help-card">
                     <p className="help-title">Need support for other models?</p>
                     <p className="mt5">
-                        <a href="mailto:sebastiansperandio@gmail.com">
+                        <a href="mailto:sebastiansperandio@gmail.com" onClick={() => trackEvent('click_email')}>
                             <i className="fas fa-envelope" style={{ marginRight: '6px' }}></i>Email me
                         </a>
                     </p>
@@ -347,7 +364,7 @@ export default function UploadForm() {
                 <div className="help-card">
                     <p className="help-title">Check the code?</p>
                     <p className="mt5">
-                        <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank" rel="noopener noreferrer">
+                        <a href="https://github.com/sebastiansperandio/Stream-Deck-BG" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('click_github')}>
                             <i className="fab fa-github" style={{ marginRight: '5px' }}></i>GitHub
                         </a>
                     </p>
@@ -376,11 +393,11 @@ export default function UploadForm() {
                 <p className="support-message">Every coffee you buy helps bring these features to life faster! ☕</p>
                 <div className="buy-me-a-coffee">
                     <div className="ko-fi">
-                        <a href='https://ko-fi.com/W7W01DBHJE' target='_blank'><img height='36' style={{border:'0px',height:'36px'}} src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                        <a href='https://ko-fi.com/W7W01DBHJE' target='_blank' onClick={() => trackEvent('click_kofi')}><img height='36' style={{border:'0px',height:'36px'}} src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' alt='Buy Me a Coffee at ko-fi.com' /></a>
                     </div>
                     <div className="paypal">
                         <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" >
-                            <button type="submit" className="pp-96GEXVM9RCTLS">
+                            <button type="submit" className="pp-96GEXVM9RCTLS" onClick={() => trackEvent('click_paypal')}>
                                 <i className="fab fa-paypal" style={{ marginRight: '10px' }}></i>Buy me a coffee
                             </button>
                         </form>

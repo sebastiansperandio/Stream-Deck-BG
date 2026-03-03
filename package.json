@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.98.0",
     "gif-encoder-2": "^1.0.5",
     "gifuct-js": "^2.1.2",
     "jszip": "^3.10.1",
