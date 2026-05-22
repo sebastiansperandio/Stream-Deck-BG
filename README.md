@@ -6,13 +6,15 @@ This project is designed to **recut** larger GIFs into multiple smaller **animat
 
 ---
 
-![Stream Deck GIF Background Slicer](public/img/sdbg-demo.png)
+![Stream Deck GIF Background Slicer](public/img/new-demo.png)
 
 ---
 
 ## Features
 
+- **Visual model picker** — pick your Stream Deck device from cards that show the actual button-grid layout (Mini, Stream Deck, Plus/Neo, XL).
 - **Drag & drop** or manual selection of your GIF file.
+- **Smart dimension check** — validates your GIF size against the selected model before processing and blocks invalid uploads with a clear message.
 - **Automatic slicing** of the GIF frames into 96×96 tiles.
 - **Separate** each tile into a fully animated mini-GIF.
 - **Package** all mini-GIFs into a single ZIP for easy download.
@@ -108,12 +110,12 @@ npx vercel --prod
      - **Stream Deck Plus/Neo**: 384×192
      - **Stream Deck XL**: 768×384
 3. **Select Your Model**
-   - Use the dropdown to select your Stream Deck model.
+   - Click on the card matching your Stream Deck device. Each card shows the actual button layout and the GIF size required.
 4. **Drag & Drop or Click**
    - Drag your GIF onto the drop zone or click to open the file dialog.
-   - The file name will appear once selected.
+   - The file name will appear once selected. If the dimensions don't match the selected model, an error message will explain exactly what's needed.
 5. **Process**
-   - Click **Slice & Download GIF**. A "Please wait" message shows while slicing is in progress.
+   - Click **Slice & Get Stream Deck Profile**. A "Please wait" message shows while slicing is in progress.
 6. **Download**
    - The ZIP will **download automatically** once processing is complete.
    - Two download options are shown on the success screen:
@@ -171,7 +173,7 @@ Stream-Deck-BG/
 ## Future Support / Roadmap
 
 - ✨ **AI-Powered Features**: Smart focus detection, GIF quality enhancer, Video-to-GIF.
-- � **Stream Deck WebHID Integration**: Auto-detect your device model and push GIFs directly to buttons without importing any file.
+- 🎮 **Stream Deck WebHID Integration**: Auto-detect your device model and push GIFs directly to buttons without importing any file.
 
 ---
 
