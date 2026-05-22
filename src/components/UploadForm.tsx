@@ -9,6 +9,72 @@ import { trackEvent } from '@/utils/analytics';
 // Types
 type ModelType = 'mini' | 'regular' | 'plus' | 'xl' | 'neo';
 
+type SocialLink = {
+    name: string;
+    href: string;
+    ariaLabel: string;
+    event: string;
+    icon: React.ReactNode;
+};
+
+const socialLinks: SocialLink[] = [
+    {
+        name: 'Instagram',
+        href: 'https://www.instagram.com/sebastiansperandio/',
+        ariaLabel: 'Contact Sebastian on Instagram',
+        event: 'click_footer_instagram',
+        icon: (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5Zm8.88 1.75a1.12 1.12 0 1 1 0 2.24 1.12 1.12 0 0 1 0-2.24ZM12 6.5A5.5 5.5 0 1 1 6.5 12 5.51 5.51 0 0 1 12 6.5Zm0 1.5A4 4 0 1 0 16 12a4 4 0 0 0-4-4Z" />
+            </svg>
+        ),
+    },
+    {
+        name: 'LinkedIn',
+        href: 'https://www.linkedin.com/in/sebastian-sperandio/',
+        ariaLabel: 'Contact Sebastian on LinkedIn',
+        event: 'click_footer_linkedin',
+        icon: (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.01 2.01 0 1 0 5.3 7a2.01 2.01 0 0 0-.05-4ZM20 13.02c0-3.49-1.86-5.12-4.34-5.12a3.75 3.75 0 0 0-3.38 1.86V8.5H8.9V20h3.38v-6.2c0-1.63.31-3.21 2.33-3.21 1.99 0 2.01 1.86 2.01 3.31V20H20v-6.98Z" />
+            </svg>
+        ),
+    },
+    {
+        name: 'GitHub',
+        href: 'https://github.com/sebastiansperandio',
+        ariaLabel: 'Contact Sebastian on GitHub',
+        event: 'click_footer_github_profile',
+        icon: (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 0 0-1.34-1.76c-1.09-.75.08-.74.08-.74a2.52 2.52 0 0 1 1.84 1.24 2.57 2.57 0 0 0 3.52 1 2.58 2.58 0 0 1 .77-1.61c-2.67-.3-5.47-1.34-5.47-5.95a4.66 4.66 0 0 1 1.24-3.23 4.31 4.31 0 0 1 .12-3.19s1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23a4.31 4.31 0 0 1 .12 3.19 4.65 4.65 0 0 1 1.23 3.23c0 4.62-2.8 5.64-5.48 5.94a2.89 2.89 0 0 1 .82 2.24v3.31c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z" />
+            </svg>
+        ),
+    },
+    {
+        name: 'YouTube',
+        href: 'https://www.youtube.com/@sperandev',
+        ariaLabel: 'Contact Sebastian on YouTube',
+        event: 'click_footer_youtube',
+        icon: (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21.58 7.19a2.98 2.98 0 0 0-2.1-2.11C17.62 4.5 12 4.5 12 4.5s-5.62 0-7.48.58A2.98 2.98 0 0 0 2.42 7.2 31.31 31.31 0 0 0 2 12a31.31 31.31 0 0 0 .42 4.81 2.98 2.98 0 0 0 2.1 2.11c1.86.58 7.48.58 7.48.58s5.62 0 7.48-.58a2.98 2.98 0 0 0 2.1-2.11A31.31 31.31 0 0 0 22 12a31.31 31.31 0 0 0-.42-4.81ZM10.2 15.02V8.98L15.5 12l-5.3 3.02Z" />
+            </svg>
+        ),
+    },
+    {
+        name: 'TikTok',
+        href: 'https://www.tiktok.com/@sperandev',
+        ariaLabel: 'Contact Sebastian on TikTok',
+        event: 'click_footer_tiktok',
+        icon: (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14.94 2c.37 3.06 2.1 4.88 5.06 5.07v3.1a8.37 8.37 0 0 1-3.05-.59v5.66c0 4.26-3.45 7.76-7.7 7.76S1.56 19.5 1.56 15.24s3.45-7.76 7.7-7.76c.34 0 .67.02 1 .07v3.22a4.63 4.63 0 0 0-.98-.1 4.59 4.59 0 0 0-4.58 4.57 4.59 4.59 0 0 0 4.58 4.57 4.59 4.59 0 0 0 4.57-4.57V2h1.09Z" />
+            </svg>
+        ),
+    },
+];
+
 export default function UploadForm() {
     const [model, setModel] = useState<ModelType | ''>('');
     const [file, setFile] = useState<File | null>(null);
@@ -548,6 +614,21 @@ export default function UploadForm() {
                         Sebastian Sperandio
                     </a>
                 </p>
+                <div className="footer-socials" aria-label="Sebastian social links">
+                    {socialLinks.map((social) => (
+                        <a
+                            key={social.name}
+                            href={social.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={social.ariaLabel}
+                            className="footer-social-link"
+                            onClick={() => trackEvent(social.event)}
+                        >
+                            <span className="footer-social-icon">{social.icon}</span>
+                        </a>
+                    ))}
+                </div>
             </div>
         </div>
     );
