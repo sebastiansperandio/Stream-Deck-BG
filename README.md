@@ -35,7 +35,7 @@ This project is designed to **recut** larger GIFs into multiple smaller **animat
 | **Stream Deck Plus** | 384×192        | 96×96     | 4×2         |       |
 | **Stream Deck Neo**  | 384×192        | 96×96     | 4×2         |       |
 | **Stream Deck XL**   | 768×384        | 96×96     | 8×4         |       |
-| **Corsair K100**     | 288×576        | 96×96     | 3×4 + screen | Outputs `screen.gif` (top 288×192 display) + 12 button tiles. Use with Corsair iCUE; `.streamDeckProfile` export is skipped. Support added thanks to **Kevin McComas**. |
+| **Corsair Galleon 100 SD** | 288×576    | 96×96     | 3×4 + screen | Outputs `screen.gif` (top 288×192 display) + 12 button tiles. Use with Corsair iCUE; `.streamDeckProfile` export is skipped. Support added thanks to **Kevin McComas**. |
 
 ---
 
@@ -187,7 +187,7 @@ Stream-Deck-BG/
 
 ## Acknowledgments
 
-- **Kevin McComas** — for requesting support for the Corsair K100 SD and helping figure out the composite screen + button-grid layout.
+- **Kevin McComas** — for requesting support for the Corsair Galleon 100 SD and helping figure out the composite screen + button-grid layout.
 
 ---
 

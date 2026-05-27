@@ -16,7 +16,7 @@ export interface LayoutConfig {
     cols: number;
     tileWidth: number;
     tileHeight: number;
-    /** Optional screen region on top of the button grid (e.g., Corsair K100 SD). */
+    /** Optional screen region on top of the button grid (e.g., Corsair Galleon 100 SD). */
     screenHeight?: number;
 }
 
@@ -41,7 +41,7 @@ export const getLayout = (model: string): LayoutConfig => {
         case 'neo':
             return { rows: 2, cols: 4, tileWidth: 96, tileHeight: 96 };
         case 'corsair':
-            // Corsair K100 SD: 192-px tall screen on top, then a 4×3 button grid.
+            // Corsair Galleon 100 SD: 192-px tall screen on top, then a 4×3 button grid.
             return { rows: 4, cols: 3, tileWidth: 96, tileHeight: 96, screenHeight: 192 };
         case 'xl':
         default:
@@ -53,7 +53,7 @@ export const getLayout = (model: string): LayoutConfig => {
  * Decode a GIF file and slice it into individual animated GIFs.
  *
  * For standard Stream Decks: produces one GIF per button tile (rows × cols).
- * For composite devices (e.g., Corsair K100 SD): also produces one extra GIF
+ * For composite devices (e.g., Corsair Galleon 100 SD): also produces one extra GIF
  * for the top screen region above the button grid.
  */
 export const processGif = async (file: File, model: string): Promise<TileData[]> => {

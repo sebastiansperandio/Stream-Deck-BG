@@ -989,7 +989,7 @@ form {
 .model-card-schematic-xl { grid-template-columns: repeat(8, 1fr); }
 .model-card-schematic-corsair { grid-template-columns: repeat(3, 1fr); }
 
-/* Composite schematic (screen + button grid) for Corsair K100 SD */
+/* Composite schematic (screen + button grid) for Corsair Galleon 100 SD */
 .model-card-schematic-composite {
     display: flex;
     flex-direction: column;

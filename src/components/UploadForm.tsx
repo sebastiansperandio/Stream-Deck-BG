@@ -309,7 +309,7 @@ export default function UploadForm() {
 
                             {model === 'corsair' ? (
                                 <div style={{ marginTop: '12px', padding: '10px', background: '#f5f0ff', borderRadius: '6px', fontSize: '0.85rem', color: '#555', textAlign: 'left', maxWidth: '440px' }}>
-                                    <strong>💡 How to apply on your Corsair K100:</strong>
+                                    <strong>💡 How to apply on your Corsair Galleon 100 SD:</strong>
                                     <ol style={{ marginTop: '6px', paddingLeft: '18px' }}>
                                         <li>Open <strong>Corsair iCUE</strong> on your computer.</li>
                                         <li>Use <code>screen.gif</code> as the background image of the top display.</li>
@@ -487,7 +487,7 @@ export default function UploadForm() {
                                 </div>
                             </div>
                             <div className="model-card-meta">
-                                <strong>Corsair K100</strong>
+                                <strong>Galleon 100 SD</strong>
                                 <span>1 screen + 12 keys</span>
                                 <span className="model-card-size">GIF 288&times;576 px</span>
                                 <span className="model-card-credit">thanks to Kevin McComas</span>
