@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, useRef, useEffect, ChangeEvent, DragEvent } from 'react';
-import { processGif, getLayout, TileData } from '@/utils/processGif';
+import { processGif, getExpectedGifSize, TileData } from '@/utils/processGif';
 import { createTilesZip } from '@/utils/createZip';
 import { exportStreamDeckProfile } from '@/utils/exportProfile';
 import { trackEvent } from '@/utils/analytics';
 
 // Types
-type ModelType = 'mini' | 'regular' | 'plus' | 'xl' | 'neo';
+type ModelType = 'mini' | 'regular' | 'plus' | 'xl' | 'neo' | 'corsair';
 
 type SocialLink = {
     name: string;
@@ -202,11 +202,7 @@ export default function UploadForm() {
         }
 
         // Validate GIF dimensions against the selected model
-        const layout = getLayout(model);
-        const expected = {
-            width: layout.cols * layout.tileWidth,
-            height: layout.rows * layout.tileHeight,
-        };
+        const expected = getExpectedGifSize(model);
         try {
             const actual = await readImageDimensions(file);
             if (actual.width !== expected.width || actual.height !== expected.height) {
@@ -241,9 +237,11 @@ export default function UploadForm() {
             const zipBlob = await createTilesZip(tiles, model);
             setZipUrl(URL.createObjectURL(zipBlob));
 
-            // 3. Generate the Stream Deck profile
-            const profileBlob = await exportStreamDeckProfile(tiles, model);
-            setProfileUrl(URL.createObjectURL(profileBlob));
+            // 3. Generate the Stream Deck profile (skip for non-Elgato devices like Corsair)
+            if (model !== 'corsair') {
+                const profileBlob = await exportStreamDeckProfile(tiles, model);
+                setProfileUrl(URL.createObjectURL(profileBlob));
+            }
 
             setShowSuccess(true);
             trackEvent('processing_completed', { model, duration_ms: Date.now() - startTime });
@@ -309,15 +307,27 @@ export default function UploadForm() {
                                 </a>
                             </div>
 
-                            <div style={{ marginTop: '12px', padding: '10px', background: '#f5f0ff', borderRadius: '6px', fontSize: '0.85rem', color: '#555', textAlign: 'left', maxWidth: '440px' }}>
-                                <strong>💡 How to use the Stream Deck Profile:</strong>
-                                <ol style={{ marginTop: '6px', paddingLeft: '18px' }}>
-                                    <li>Open the <strong>Stream Deck</strong> app on your computer.</li>
-                                    <li>Click on <strong>Profiles</strong> → <strong>Import...</strong></li>
-                                    <li>Select the downloaded <code>.streamDeckProfile</code> file.</li>
-                                    <li>The profile will appear with your GIF tiles pre-assigned! 🎉</li>
-                                </ol>
-                            </div>
+                            {model === 'corsair' ? (
+                                <div style={{ marginTop: '12px', padding: '10px', background: '#f5f0ff', borderRadius: '6px', fontSize: '0.85rem', color: '#555', textAlign: 'left', maxWidth: '440px' }}>
+                                    <strong>💡 How to apply on your Corsair K100:</strong>
+                                    <ol style={{ marginTop: '6px', paddingLeft: '18px' }}>
+                                        <li>Open <strong>Corsair iCUE</strong> on your computer.</li>
+                                        <li>Use <code>screen.gif</code> as the background image of the top display.</li>
+                                        <li>Assign each <code>tile_r#_c#.gif</code> to its matching button (rows 1&ndash;4, columns 1&ndash;3).</li>
+                                        <li>When placed correctly, the animation flows across the full device. 🎉</li>
+                                    </ol>
+                                </div>
+                            ) : (
+                                <div style={{ marginTop: '12px', padding: '10px', background: '#f5f0ff', borderRadius: '6px', fontSize: '0.85rem', color: '#555', textAlign: 'left', maxWidth: '440px' }}>
+                                    <strong>💡 How to use the Stream Deck Profile:</strong>
+                                    <ol style={{ marginTop: '6px', paddingLeft: '18px' }}>
+                                        <li>Open the <strong>Stream Deck</strong> app on your computer.</li>
+                                        <li>Click on <strong>Profiles</strong> → <strong>Import...</strong></li>
+                                        <li>Select the downloaded <code>.streamDeckProfile</code> file.</li>
+                                        <li>The profile will appear with your GIF tiles pre-assigned! 🎉</li>
+                                    </ol>
+                                </div>
+                            )}
                         </>
                     )}
                      <div className="donation-suggestion mt20">
@@ -462,6 +472,27 @@ export default function UploadForm() {
                                 <span className="model-card-size">GIF 768&times;384 px</span>
                             </div>
                         </button>
+
+                        <button
+                            type="button"
+                            className={`model-card ${model === 'corsair' ? 'active' : ''}`}
+                            aria-pressed={model === 'corsair'}
+                            onClick={() => handleModelSelect('corsair')}
+                        >
+                            <span className="model-card-badge">NEW</span>
+                            <div className="model-card-schematic-composite">
+                                <div className="model-card-screen" aria-hidden="true"></div>
+                                <div className="model-card-schematic model-card-schematic-corsair">
+                                    {Array.from({ length: 12 }).map((_, i) => <span key={i} />)}
+                                </div>
+                            </div>
+                            <div className="model-card-meta">
+                                <strong>Corsair K100</strong>
+                                <span>1 screen + 12 keys</span>
+                                <span className="model-card-size">GIF 288&times;576 px</span>
+                                <span className="model-card-credit">thanks to Kevin McComas</span>
+                            </div>
+                        </button>
                     </div>
                 </fieldset>
 
@@ -528,7 +559,7 @@ export default function UploadForm() {
             <div className="mt5 help-grid">
                 <a
                     className="help-card"
-                    href={`/sample/sample_${model === 'mini' ? '288x192' : model === 'plus' ? '384x192' : model === 'regular' ? '480x288' : '768x384'}.gif`}
+                    href={`/sample/sample_${model === 'mini' ? '288x192' : model === 'plus' ? '384x192' : model === 'regular' ? '480x288' : model === 'corsair' ? '288x576' : '768x384'}.gif`}
                     download
                     onClick={() => trackEvent('click_sample_download', { model })}
                 >

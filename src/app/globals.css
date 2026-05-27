@@ -900,12 +900,13 @@ form {
 
 .model-picker-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     width: 100%;
 }
 
 .model-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -920,6 +921,35 @@ form {
     text-align: center;
     transition: border-color 0.15s ease, background-color 0.15s ease;
     min-height: 110px;
+}
+
+.model-card-badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    padding: 3px 8px;
+    background-color: #db2777;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    box-shadow: 0 2px 0 rgba(157, 23, 77, 0.35);
+    transform: rotate(8deg);
+    pointer-events: none;
+}
+
+.model-card-credit {
+    font-size: 0.65rem;
+    color: #999;
+    font-style: italic;
+    margin-top: 4px;
+}
+
+.model-card.active .model-card-credit {
+    color: var(--button-color);
 }
 
 .model-card:hover {
@@ -957,6 +987,34 @@ form {
 .model-card-schematic-regular { grid-template-columns: repeat(5, 1fr); }
 .model-card-schematic-plus { grid-template-columns: repeat(4, 1fr); }
 .model-card-schematic-xl { grid-template-columns: repeat(8, 1fr); }
+.model-card-schematic-corsair { grid-template-columns: repeat(3, 1fr); }
+
+/* Composite schematic (screen + button grid) for Corsair K100 SD */
+.model-card-schematic-composite {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 7px;
+    background-color: #1a1a2e;
+    border-radius: 5px;
+}
+
+.model-card-schematic-composite .model-card-screen {
+    background: linear-gradient(135deg, #6b4fc4, #4a3a8a);
+    border-radius: 2px;
+    height: 22px;
+    transition: background 0.15s ease;
+}
+
+.model-card.active .model-card-schematic-composite .model-card-screen {
+    background: linear-gradient(135deg, #7a4db5, #623198);
+}
+
+.model-card-schematic-composite .model-card-schematic {
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+}
 
 .model-card-meta {
     display: flex;
@@ -989,7 +1047,13 @@ form {
     font-weight: 600;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
+    .model-picker-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
     .model-picker-grid {
         grid-template-columns: repeat(2, 1fr);
     }

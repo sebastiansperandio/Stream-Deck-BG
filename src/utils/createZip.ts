@@ -9,7 +9,9 @@ export const createTilesZip = async (tiles: TileData[], model: string): Promise<
     const folder = zip.folder(`stream_deck_${model}_tiles`);
 
     for (const tile of tiles) {
-        const filename = `tile_r${tile.row + 1}_c${tile.col + 1}.gif`;
+        const filename = tile.name
+            ? `${tile.name}.gif`
+            : `tile_r${tile.row + 1}_c${tile.col + 1}.gif`;
         folder?.file(filename, tile.buffer, { binary: true });
     }
 

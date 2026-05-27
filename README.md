@@ -6,7 +6,7 @@ This project is designed to **recut** larger GIFs into multiple smaller **animat
 
 ---
 
-![Stream Deck GIF Background Slicer](public/img/new-demo.png)
+![Stream Deck GIF Background Slicer](public/img/new-demo-v2.png)
 
 ---
 
@@ -28,13 +28,14 @@ This project is designed to **recut** larger GIFs into multiple smaller **animat
 
 ## Supported Models
 
-| Model                | GIF Dimensions | Tile Size | Grid Layout |
-|----------------------|----------------|-----------|-------------|
-| **Stream Deck Mini** | 288×192        | 96×96     | 2×3         |
-| **Stream Deck**      | 480×288        | 96×96     | 5×3         |
-| **Stream Deck Plus** | 384×192        | 96×96     | 4×2         |
-| **Stream Deck Neo**  | 384×192        | 96×96     | 4×2         |
-| **Stream Deck XL**   | 768×384        | 96×96     | 8×4         |
+| Model                | GIF Dimensions | Tile Size | Grid Layout | Notes |
+|----------------------|----------------|-----------|-------------|-------|
+| **Stream Deck Mini** | 288×192        | 96×96     | 2×3         |       |
+| **Stream Deck**      | 480×288        | 96×96     | 5×3         |       |
+| **Stream Deck Plus** | 384×192        | 96×96     | 4×2         |       |
+| **Stream Deck Neo**  | 384×192        | 96×96     | 4×2         |       |
+| **Stream Deck XL**   | 768×384        | 96×96     | 8×4         |       |
+| **Corsair K100**     | 288×576        | 96×96     | 3×4 + screen | Outputs `screen.gif` (top 288×192 display) + 12 button tiles. Use with Corsair iCUE; `.streamDeckProfile` export is skipped. Support added thanks to **Kevin McComas**. |
 
 ---
 
@@ -181,6 +182,12 @@ Stream-Deck-BG/
 
 - Pull requests are welcome on [GitHub](https://github.com/sebastiansperandio/Stream-Deck-BG).
 - Email [sebastiansperandio@gmail.com](mailto:sebastiansperandio@gmail.com) for advanced questions or new model requests.
+
+---
+
+## Acknowledgments
+
+- **Kevin McComas** — for requesting support for the Corsair K100 SD and helping figure out the composite screen + button-grid layout.
 
 ---
 

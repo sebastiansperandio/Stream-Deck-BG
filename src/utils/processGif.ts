@@ -3,9 +3,12 @@ import { parseGIF, decompressFrames } from 'gifuct-js';
 import GIFEncoder from 'gif-encoder-2';
 
 export interface TileData {
-    row: number; // 0-indexed
-    col: number; // 0-indexed
+    row: number;       // 0-indexed (-1 for the screen region on composite devices)
+    col: number;       // 0-indexed (-1 for the screen region on composite devices)
+    width: number;     // pixel width of this region
+    height: number;    // pixel height of this region
     buffer: Uint8Array;
+    name?: string;     // optional filename override (e.g., 'screen')
 }
 
 export interface LayoutConfig {
@@ -13,7 +16,20 @@ export interface LayoutConfig {
     cols: number;
     tileWidth: number;
     tileHeight: number;
+    /** Optional screen region on top of the button grid (e.g., Corsair K100 SD). */
+    screenHeight?: number;
 }
+
+/**
+ * Total expected GIF size for a model: button grid + optional top screen.
+ */
+export const getExpectedGifSize = (model: string): { width: number; height: number } => {
+    const layout = getLayout(model);
+    return {
+        width: layout.cols * layout.tileWidth,
+        height: layout.rows * layout.tileHeight + (layout.screenHeight ?? 0),
+    };
+};
 
 export const getLayout = (model: string): LayoutConfig => {
     switch (model) {
@@ -24,6 +40,9 @@ export const getLayout = (model: string): LayoutConfig => {
         case 'plus':
         case 'neo':
             return { rows: 2, cols: 4, tileWidth: 96, tileHeight: 96 };
+        case 'corsair':
+            // Corsair K100 SD: 192-px tall screen on top, then a 4×3 button grid.
+            return { rows: 4, cols: 3, tileWidth: 96, tileHeight: 96, screenHeight: 192 };
         case 'xl':
         default:
             return { rows: 4, cols: 8, tileWidth: 96, tileHeight: 96 };
@@ -31,8 +50,11 @@ export const getLayout = (model: string): LayoutConfig => {
 };
 
 /**
- * Decode a GIF file and slice it into individual animated tile GIFs.
- * Returns raw tile data (not packaged into a ZIP).
+ * Decode a GIF file and slice it into individual animated GIFs.
+ *
+ * For standard Stream Decks: produces one GIF per button tile (rows × cols).
+ * For composite devices (e.g., Corsair K100 SD): also produces one extra GIF
+ * for the top screen region above the button grid.
  */
 export const processGif = async (file: File, model: string): Promise<TileData[]> => {
     const arrayBuffer = await file.arrayBuffer();
@@ -40,18 +62,21 @@ export const processGif = async (file: File, model: string): Promise<TileData[]>
     const frames = decompressFrames(gif, true);
 
     const layout = getLayout(model);
-    const width = layout.cols * layout.tileWidth;
-    const height = layout.rows * layout.tileHeight;
+    const gridWidth = layout.cols * layout.tileWidth;
+    const gridHeight = layout.rows * layout.tileHeight;
+    const screenHeight = layout.screenHeight ?? 0;
+    const screenWidth = screenHeight > 0 ? gridWidth : 0;
+    const totalHeight = gridHeight + screenHeight;
 
     const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = gridWidth;
+    canvas.height = totalHeight;
     const ctx = canvas.getContext('2d')!;
 
     const tempCanvas = document.createElement('canvas');
     const tempCtx = tempCanvas.getContext('2d')!;
 
-    // Initialize encoders for each tile
+    // Initialize encoders for each button tile
     const tileEncoders: GIFEncoder[][] = [];
     for (let r = 0; r < layout.rows; r++) {
         tileEncoders[r] = [];
@@ -62,6 +87,15 @@ export const processGif = async (file: File, model: string): Promise<TileData[]>
             encoder.setQuality(10);
             tileEncoders[r][c] = encoder;
         }
+    }
+
+    // Optional encoder for the top screen region (single, non-sliced)
+    let screenEncoder: GIFEncoder | null = null;
+    if (screenHeight > 0) {
+        screenEncoder = new GIFEncoder(screenWidth, screenHeight);
+        screenEncoder.start();
+        screenEncoder.setRepeat(0);
+        screenEncoder.setQuality(10);
     }
 
     for (let i = 0; i < frames.length; i++) {
@@ -87,10 +121,18 @@ export const processGif = async (file: File, model: string): Promise<TileData[]>
 
         ctx.drawImage(tempCanvas, dims.left, dims.top);
 
+        // Capture screen region (top of source GIF)
+        if (screenEncoder) {
+            const screenData = ctx.getImageData(0, 0, screenWidth, screenHeight);
+            screenEncoder.setDelay(frame.delay);
+            screenEncoder.addFrame(screenData.data as any);
+        }
+
+        // Capture button tiles (offset by screenHeight if present)
         for (let r = 0; r < layout.rows; r++) {
             for (let c = 0; c < layout.cols; c++) {
                 const tileX = c * layout.tileWidth;
-                const tileY = r * layout.tileHeight;
+                const tileY = screenHeight + r * layout.tileHeight;
                 const tileData = ctx.getImageData(tileX, tileY, layout.tileWidth, layout.tileHeight);
                 const encoder = tileEncoders[r][c];
                 encoder.setDelay(frame.delay);
@@ -99,13 +141,33 @@ export const processGif = async (file: File, model: string): Promise<TileData[]>
         }
     }
 
-    // Finish encoders and collect tile data
+    // Collect all results
     const tiles: TileData[] = [];
+
+    if (screenEncoder) {
+        screenEncoder.finish();
+        const buffer: Uint8Array = screenEncoder.out.getData();
+        tiles.push({
+            row: -1,
+            col: -1,
+            width: screenWidth,
+            height: screenHeight,
+            buffer,
+            name: 'screen',
+        });
+    }
+
     for (let r = 0; r < layout.rows; r++) {
         for (let c = 0; c < layout.cols; c++) {
             tileEncoders[r][c].finish();
             const buffer: Uint8Array = tileEncoders[r][c].out.getData();
-            tiles.push({ row: r, col: c, buffer });
+            tiles.push({
+                row: r,
+                col: c,
+                width: layout.tileWidth,
+                height: layout.tileHeight,
+                buffer,
+            });
         }
     }
 
