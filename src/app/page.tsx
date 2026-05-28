@@ -1,4 +1,6 @@
+import Link from "next/link";
 import UploadForm from "@/components/UploadForm";
+import { devices } from "@/lib/devices";
 
 export default function Home() {
   return (
@@ -44,27 +46,19 @@ export default function Home() {
           </ol>
 
           <h2>Supported devices &amp; required GIF sizes</h2>
+          <p>Each device has its own dedicated guide covering size requirements, setup steps and model-specific FAQs:</p>
           <ul className="seo-device-list">
-            <li>
-              <strong>Stream Deck Mini</strong> &mdash; 6 buttons (2&times;3 grid), GIF{" "}
-              <strong>288&times;192&nbsp;px</strong>
-            </li>
-            <li>
-              <strong>Stream Deck MK.2</strong> &mdash; 15 buttons (5&times;3 grid), GIF{" "}
-              <strong>480&times;288&nbsp;px</strong>
-            </li>
-            <li>
-              <strong>Stream Deck Plus / Neo</strong> &mdash; 8 buttons (4&times;2 grid), GIF{" "}
-              <strong>384&times;192&nbsp;px</strong>
-            </li>
-            <li>
-              <strong>Stream Deck XL</strong> &mdash; 32 buttons (8&times;4 grid), GIF{" "}
-              <strong>768&times;384&nbsp;px</strong>
-            </li>
-            <li>
-              <strong>Corsair Galleon 100 SD</strong> &mdash; 12 buttons (4&times;3 grid) +
-              288&times;192&nbsp;px integrated screen, GIF <strong>288&times;576&nbsp;px</strong>
-            </li>
+            {devices.map((d) => (
+              <li key={d.slug}>
+                <Link href={`/${d.slug}`}>
+                  <strong>{d.name}</strong>
+                </Link>{" "}
+                &mdash; {d.buttons} buttons ({d.rows}&times;{d.cols} grid){d.hasScreen ? " + integrated screen" : ""}, GIF{" "}
+                <strong>
+                  {d.gifWidth}&times;{d.gifHeight}&nbsp;px
+                </strong>
+              </li>
+            ))}
           </ul>
 
           <h2>Frequently asked questions</h2>

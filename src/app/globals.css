@@ -35,7 +35,7 @@ body {
     flex-direction: column;
     justify-content: flex-start; /* anchor form at the top so collapses don't recenter the page */
     align-items: center;         /* keep horizontal centering */
-    font-family: "Plus Jakarta Sans", "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Segoe UI", Roboto, Arial, sans-serif;
     /* background: linear-gradient(120deg, #f0f0f0, #fafafa); */
     background: linear-gradient( 120deg, var(--primary-color), lightblue);
     color: #333;
@@ -1192,5 +1192,205 @@ form {
     }
     .seo-content h2 {
         font-size: 1.2rem;
+    }
+}
+
+/* Per-device SEO landing pages (/[device]) */
+.device-page {
+    width: 100%;
+    max-width: 1040px;
+    margin: 40px auto;
+    padding: 40px 44px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    color: #333;
+    box-sizing: border-box;
+}
+
+.device-page-inner {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.device-breadcrumb {
+    margin: 0 0 24px;
+    font-size: 0.9rem;
+}
+
+.device-breadcrumb a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.device-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.device-h1 {
+    font-size: 2.1rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #1a1a2e;
+    font-weight: 800;
+    margin: 0 0 14px;
+}
+
+.device-h1-sub {
+    color: var(--button-color);
+    font-weight: 700;
+}
+
+.device-intro {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: #444;
+    margin: 0 0 24px;
+}
+
+.device-spec-card {
+    background-color: #faf7ff;
+    border: 1px solid #e9def9;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 0 0 24px;
+}
+
+.device-spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #efe7fb;
+}
+
+.device-spec-row:last-child {
+    border-bottom: 0;
+}
+
+.device-spec-label {
+    font-size: 0.88rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.device-spec-value {
+    font-size: 0.95rem;
+    color: #1a1a2e;
+    font-weight: 700;
+    text-align: right;
+}
+
+.device-cta {
+    display: inline-block;
+    padding: 12px 22px;
+    background-color: var(--button-color);
+    color: #fff;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 8px 0 28px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.device-cta:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.device-page h2 {
+    font-size: 1.4rem;
+    color: #1a1a2e;
+    margin: 32px 0 12px;
+    letter-spacing: -0.01em;
+}
+
+.device-page h3 {
+    font-size: 1.05rem;
+    color: #1a1a2e;
+    margin: 16px 0 6px;
+    text-align: left;
+}
+
+.device-page p,
+.device-page li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #444;
+}
+
+.device-page p {
+    margin: 0 0 12px;
+}
+
+.device-page ol,
+.device-page ul {
+    margin: 0 0 12px;
+    padding-left: 1.25rem;
+}
+
+.device-page li {
+    margin-bottom: 8px;
+}
+
+.device-faq-item {
+    margin: 0 0 18px;
+}
+
+.device-faq-item p {
+    margin: 0;
+}
+
+.device-cross-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.device-cross-links li {
+    margin: 0;
+}
+
+.device-cross-links a {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 14px;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1a1a2e;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.device-cross-links a:hover {
+    border-color: var(--button-color);
+    background-color: #faf7ff;
+    text-decoration: none;
+}
+
+.device-cross-links a span {
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: 500;
+}
+
+@media (max-width: 600px) {
+    .device-page {
+        padding: 24px 20px;
+        margin: 20px auto;
+    }
+    .device-h1 {
+        font-size: 1.6rem;
+    }
+    .device-cross-links {
+        grid-template-columns: 1fr;
     }
 }
