@@ -1104,3 +1104,93 @@ form {
         font-size: 0.95rem;
     }
 }
+
+/* SEO / About section below the main form — server-rendered, crawlable content */
+.seo-content {
+    width: 100%;
+    max-width: 1040px;
+    margin: 30px auto 40px;
+    padding: 28px 36px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    color: #333;
+    box-sizing: border-box;
+}
+
+.seo-inner {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.seo-content h2 {
+    font-size: 1.35rem;
+    color: #1a1a2e;
+    margin: 26px 0 10px;
+    letter-spacing: -0.01em;
+}
+
+.seo-content h2:first-child {
+    margin-top: 0;
+}
+
+.seo-content h3 {
+    font-size: 1.05rem;
+    color: #1a1a2e;
+    margin: 18px 0 6px;
+    text-align: left;
+}
+
+.seo-content p,
+.seo-content li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #444;
+}
+
+.seo-content p {
+    margin: 0 0 10px;
+}
+
+.seo-content ol,
+.seo-content ul {
+    margin: 0 0 10px;
+    padding-left: 1.25rem;
+}
+
+.seo-content li {
+    margin-bottom: 6px;
+}
+
+.seo-content code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.88em;
+    padding: 2px 5px;
+    background-color: #f5f0ff;
+    color: var(--button-color);
+    border-radius: 3px;
+}
+
+.seo-content a {
+    color: var(--link-color);
+    font-weight: 600;
+}
+
+.seo-content a:hover {
+    text-decoration: underline;
+}
+
+.seo-content strong {
+    color: #1a1a2e;
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .seo-content {
+        padding: 20px;
+        margin: 20px auto 30px;
+    }
+    .seo-content h2 {
+        font-size: 1.2rem;
+    }
+}
