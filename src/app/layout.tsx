@@ -79,6 +79,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "1w8wfV_6PHud3vTuYy96NFEzm6hjznP7-D1aS43Bvk8",
+  },
   other: {
     "theme-color": "#623198",
   },
