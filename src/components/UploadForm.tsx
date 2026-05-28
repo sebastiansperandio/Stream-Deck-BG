@@ -347,7 +347,7 @@ export default function UploadForm() {
                             <p>Did you find this tool helpful? Consider supporting future development!</p>
                             <div className="buy-me-a-coffee">
                                 <div className="ko-fi">
-                                   <a href='https://ko-fi.com/W7W01DBHJE' target='_blank' onClick={() => trackEvent('click_kofi')}><img height='36' style={{border:'0px',height:'36px'}} src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                                   <a href='https://ko-fi.com/W7W01DBHJE' target='_blank' onClick={() => trackEvent('click_kofi')}><img height='36' style={{border:'0px',height:'36px'}} src='/img/kofi-button.png' alt='Buy Me a Coffee at ko-fi.com' /></a>
                                 </div>
                                 <div className="paypal">
                                     <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" >
@@ -557,7 +557,7 @@ export default function UploadForm() {
                 <p className="support-message">Every coffee you buy helps bring these features to life faster! ☕</p>
                 <div className="buy-me-a-coffee">
                     <div className="ko-fi">
-                        <a href='https://ko-fi.com/W7W01DBHJE' target='_blank' onClick={() => trackEvent('click_kofi')}><img height='36' style={{border:'0px',height:'36px'}} src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                        <a href='https://ko-fi.com/W7W01DBHJE' target='_blank' onClick={() => trackEvent('click_kofi')}><img height='36' style={{border:'0px',height:'36px'}} src='/img/kofi-button.png' alt='Buy Me a Coffee at ko-fi.com' /></a>
                     </div>
                     <div className="paypal">
                         <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank">
