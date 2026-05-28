@@ -159,7 +159,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={plusJakartaSans.variable}>
       <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
       </head>
       <body>

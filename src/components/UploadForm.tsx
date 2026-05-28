@@ -2,6 +2,19 @@
 
 import React, { useState, useRef, useEffect, ChangeEvent, DragEvent } from 'react';
 import { processGif, getExpectedGifSize, TileData } from '@/utils/processGif';
+import {
+    CheckCircleIcon,
+    CircleIcon,
+    ExclamationCircleIcon,
+    CloudUploadIcon,
+    DownloadIcon,
+    VideoIcon,
+    EnvelopeIcon,
+    FileArchiveIcon,
+    StreamIcon,
+    RedoIcon,
+    PaypalIcon,
+} from './Icons';
 import { createTilesZip } from '@/utils/createZip';
 import { exportStreamDeckProfile } from '@/utils/exportProfile';
 import { trackEvent } from '@/utils/analytics';
@@ -270,7 +283,7 @@ export default function UploadForm() {
             <div className="form-container">
                 <h1>Success!</h1>
                 <div className="success-message">
-                    <i className="fas fa-check-circle success-icon"></i>
+                    <CheckCircleIcon className="success-icon" />
                     <p>Your GIF has been processed successfully!</p>
                     {zipUrl && (
                         <>
@@ -278,7 +291,7 @@ export default function UploadForm() {
                             <div className="button-container" style={{ flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
                                 {/* Standard ZIP */}
                                 <a href={zipUrl} download="stream_deck_gifs.zip" className="manual-download" onClick={() => trackEvent('download_zip')}>
-                                    <i className="fas fa-file-archive" style={{ marginRight: '8px' }}></i>
+                                    <FileArchiveIcon style={{ marginRight: '8px' }} />
                                     Download GIF Tiles (ZIP)
                                 </a>
 
@@ -295,14 +308,14 @@ export default function UploadForm() {
                                         transition: 'background-color 0.3s, transform 0.1s',
                                         boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
                                     }}>
-                                        <i className="fas fa-stream" style={{ marginRight: '8px' }}></i>
+                                        <StreamIcon style={{ marginRight: '8px' }} />
                                         Export as Stream Deck Profile
                                     </a>
                                 )}
 
                                 {/* Reset */}
                                 <a href="/" className="return-button" onClick={handleReset}>
-                                    <i className="fas fa-redo" style={{ marginRight: '8px' }}></i>
+                                    <RedoIcon style={{ marginRight: '8px' }} />
                                     Slice another GIF
                                 </a>
                             </div>
@@ -339,7 +352,7 @@ export default function UploadForm() {
                                 <div className="paypal">
                                     <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank" >
                                         <button type="submit" className="pp-96GEXVM9RCTLS" onClick={() => trackEvent('click_paypal')}>
-                                            <i className="fab fa-paypal" style={{marginRight: '10px'}}></i>Buy me a coffee
+                                            <PaypalIcon style={{ marginRight: '10px' }} />Buy me a coffee
                                         </button>
                                     </form>
                                 </div>
@@ -395,7 +408,7 @@ export default function UploadForm() {
 
             {error && (
                 <div id="error_message" className="error-message">
-                    <i className="fas fa-exclamation-circle"></i> {error}
+                    <ExclamationCircleIcon style={{ marginRight: '5px', verticalAlign: '-2px' }} /> {error}
                 </div>
             )}
 
@@ -504,7 +517,7 @@ export default function UploadForm() {
                     onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
                 >
-                    <i className="fas fa-cloud-upload-alt" style={{ fontSize: '2rem', color: '#623198', marginBottom: '5px' }}></i>
+                    <CloudUploadIcon size={32} style={{ color: '#623198', marginBottom: '5px' }} />
                     <p id="drop_zone_text">{file ? file.name : 'Drag & drop your GIF here, or click to select'}</p>
                     <input 
                         type="file" 
@@ -529,11 +542,11 @@ export default function UploadForm() {
                 {!isProcessing && (
                     <p className={`upload-helper ${model && file ? 'is-complete' : ''}`}>
                         <span className={model ? 'is-done' : ''}>
-                            <i className={`fas ${model ? 'fa-check-circle' : 'fa-circle'}`} aria-hidden="true"></i>
+                            {model ? <CheckCircleIcon /> : <CircleIcon />}
                             Pick a model
                         </span>
                         <span className={file ? 'is-done' : ''}>
-                            <i className={`fas ${file ? 'fa-check-circle' : 'fa-circle'}`} aria-hidden="true"></i>
+                            {file ? <CheckCircleIcon /> : <CircleIcon />}
                             Upload a GIF
                         </span>
                     </p>
@@ -549,7 +562,7 @@ export default function UploadForm() {
                     <div className="paypal">
                         <form action="https://www.paypal.com/ncp/payment/96GEXVM9RCTLS" method="post" target="_blank">
                             <button type="submit" className="pp-96GEXVM9RCTLS" onClick={() => trackEvent('click_paypal')}>
-                                <i className="fab fa-paypal" style={{ marginRight: '10px' }}></i>Buy me a coffee
+                                <PaypalIcon style={{ marginRight: '10px' }} />Buy me a coffee
                             </button>
                         </form>
                     </div>
@@ -563,7 +576,7 @@ export default function UploadForm() {
                     download
                     onClick={() => trackEvent('click_sample_download', { model })}
                 >
-                    <span className="help-card-icon"><i className="fas fa-download" aria-hidden="true"></i></span>
+                    <span className="help-card-icon"><DownloadIcon /></span>
                     <span className="help-card-title">Need a sample GIF?</span>
                     <span className="help-card-action">Download <span className="help-card-arrow" aria-hidden="true">&rarr;</span></span>
                 </a>
@@ -575,7 +588,7 @@ export default function UploadForm() {
                     rel="noopener noreferrer"
                     onClick={() => trackEvent('click_tutorial')}
                 >
-                    <span className="help-card-icon"><i className="fas fa-video" aria-hidden="true"></i></span>
+                    <span className="help-card-icon"><VideoIcon /></span>
                     <span className="help-card-title">Need help creating a GIF?</span>
                     <span className="help-card-action">Watch tutorial <span className="help-card-arrow" aria-hidden="true">&rarr;</span></span>
                 </a>
@@ -585,7 +598,7 @@ export default function UploadForm() {
                     href="mailto:sebastiansperandio@gmail.com"
                     onClick={() => trackEvent('click_email')}
                 >
-                    <span className="help-card-icon"><i className="fas fa-envelope" aria-hidden="true"></i></span>
+                    <span className="help-card-icon"><EnvelopeIcon /></span>
                     <span className="help-card-title">Need support for other models?</span>
                     <span className="help-card-action">Email me <span className="help-card-arrow" aria-hidden="true">&rarr;</span></span>
                 </a>
