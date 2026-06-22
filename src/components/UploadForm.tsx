@@ -676,14 +676,14 @@ export default function UploadForm() {
                 <p style={{ fontSize: '0.8rem', color: '#aaa', marginTop: '12px' }}>
                     ⚛️ Also try{' '}
                     <a
-                        href="https://reactquest.speran.dev/"
+                        href="https://speran.dev/lab"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#623198', fontWeight: 'bold', textDecoration: 'none' }}
                     >
-                        ReactQuest
+                        Speran Lab
                     </a>
-                    {' '}— React challenges &amp; exercises.
+                    {' '}— Challenges &amp; learnings in web development.
                 </p>
             </div>
         </div>
