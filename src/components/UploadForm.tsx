@@ -674,7 +674,7 @@ export default function UploadForm() {
                     ))}
                 </div>
                 <p style={{ fontSize: '0.8rem', color: '#aaa', marginTop: '12px' }}>
-                    ⚛️ Also try{' '}
+                    Also try{' '}
                     <a
                         href="https://speran.dev/lab"
                         target="_blank"
